@@ -1,0 +1,24 @@
+{
+  "blogApp": {
+    "postLike": {
+      "home": {
+        "title": "Post Likes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Post Like",
+        "createOrEditLabel": "Create or edit a Post Like",
+        "notFound": "No Post Likes found"
+      },
+      "created": "A new Post Like is created with identifier {{ param }}",
+      "updated": "A Post Like is updated with identifier {{ param }}",
+      "deleted": "A Post Like is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Post Like {{ id }}?"
+      },
+      "detail": {
+        "title": "Post Like"
+      },
+      "id": "ID",
+      "post": "Post"
+    }
+  }
+}

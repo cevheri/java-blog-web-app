@@ -1,0 +1,69 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="post">
+      <h2 data-cy="postDetailsHeading"><span jhiTranslate="blogApp.post.detail.title">Post</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ post.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.post.title" [ngbTooltip]="'blogApp.post.help.title' | translate">Title</span></dt>
+        <dd>
+          <span>{{ post.title }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.post.content" [ngbTooltip]="'blogApp.post.help.content' | translate">Content</span></dt>
+        <dd>
+          <span>{{ post.content }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="blogApp.post.paidMemberOnly" [ngbTooltip]="'blogApp.post.help.paidMemberOnly' | translate"
+            >Paid Member Only</span
+          >
+        </dt>
+        <dd>
+          <span>{{ post.paidMemberOnly }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="blogApp.post.publishThirdPartyApp" [ngbTooltip]="'blogApp.post.help.publishThirdPartyApp' | translate"
+            >Publish Third Party App</span
+          >
+        </dt>
+        <dd>
+          <span>{{ post.publishThirdPartyApp }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.post.user">User</span></dt>
+        <dd>
+          <span>{{ post.user?.login }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.post.blog">Blog</span></dt>
+        <dd>
+          <div *ngIf="post.blog">
+            <a [routerLink]="['/blog', post.blog?.id, 'view']">{{ post.blog?.name }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="blogApp.post.tag">Tag</span></dt>
+        <dd>
+          <span *ngFor="let tag of post.tags; let last = last">
+            <a [routerLink]="['/tag', tag?.id, 'view']">{{ tag.name }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/post', post.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

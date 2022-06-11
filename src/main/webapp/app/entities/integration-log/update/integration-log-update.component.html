@@ -1,0 +1,172 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-integration-log-heading"
+        data-cy="IntegrationLogCreateUpdateHeading"
+        jhiTranslate="blogApp.integrationLog.home.createOrEditLabel"
+      >
+        Create or edit a Integration Log
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="blogApp.integrationLog.createdBy" for="field_createdBy">Created By</label>
+          <input type="text" class="form-control" name="createdBy" id="field_createdBy" data-cy="createdBy" formControlName="createdBy" />
+          <div *ngIf="editForm.get('createdBy')!.invalid && (editForm.get('createdBy')!.dirty || editForm.get('createdBy')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('createdBy')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 100 }"
+            >
+              This field cannot be longer than 100 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="blogApp.integrationLog.createdDate" for="field_createdDate">Created Date</label>
+          <div class="d-flex">
+            <input
+              id="field_createdDate"
+              data-cy="createdDate"
+              type="datetime-local"
+              class="form-control"
+              name="createdDate"
+              formControlName="createdDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="blogApp.integrationLog.integrationName" for="field_integrationName"
+            >Integration Name</label
+          >
+          <select
+            class="form-control"
+            name="integrationName"
+            formControlName="integrationName"
+            id="field_integrationName"
+            data-cy="integrationName"
+          >
+            <option [ngValue]="null">{{ 'blogApp.ThirdPartyAppName.null' | translate }}</option>
+            <option *ngFor="let thirdPartyAppName of thirdPartyAppNameValues" [value]="thirdPartyAppName">
+              {{ 'blogApp.ThirdPartyAppName.' + thirdPartyAppName | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="blogApp.integrationLog.apiUrl" for="field_apiUrl">Api Url</label>
+          <input type="text" class="form-control" name="apiUrl" id="field_apiUrl" data-cy="apiUrl" formControlName="apiUrl" />
+          <div *ngIf="editForm.get('apiUrl')!.invalid && (editForm.get('apiUrl')!.dirty || editForm.get('apiUrl')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('apiUrl')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 1000 }"
+            >
+              This field cannot be longer than 1000 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="blogApp.integrationLog.exitCode" for="field_exitCode">Exit Code</label>
+          <select class="form-control" name="exitCode" formControlName="exitCode" id="field_exitCode" data-cy="exitCode">
+            <option [ngValue]="null">{{ 'blogApp.ExitCodeType.null' | translate }}</option>
+            <option *ngFor="let exitCodeType of exitCodeTypeValues" [value]="exitCodeType">
+              {{ 'blogApp.ExitCodeType.' + exitCodeType | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="blogApp.integrationLog.requestData" for="field_requestData">Request Data</label>
+          <textarea
+            class="form-control"
+            name="requestData"
+            id="field_requestData"
+            data-cy="requestData"
+            formControlName="requestData"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="blogApp.integrationLog.responseData" for="field_responseData">Response Data</label>
+          <textarea
+            class="form-control"
+            name="responseData"
+            id="field_responseData"
+            data-cy="responseData"
+            formControlName="responseData"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="blogApp.integrationLog.errorCode" for="field_errorCode">Error Code</label>
+          <input type="text" class="form-control" name="errorCode" id="field_errorCode" data-cy="errorCode" formControlName="errorCode" />
+          <div *ngIf="editForm.get('errorCode')!.invalid && (editForm.get('errorCode')!.dirty || editForm.get('errorCode')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('errorCode')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 1000 }"
+            >
+              This field cannot be longer than 1000 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="blogApp.integrationLog.errorMessage" for="field_errorMessage">Error Message</label>
+          <input
+            type="text"
+            class="form-control"
+            name="errorMessage"
+            id="field_errorMessage"
+            data-cy="errorMessage"
+            formControlName="errorMessage"
+          />
+          <div
+            *ngIf="editForm.get('errorMessage')!.invalid && (editForm.get('errorMessage')!.dirty || editForm.get('errorMessage')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('errorMessage')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 4000 }"
+            >
+              This field cannot be longer than 4000 characters.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

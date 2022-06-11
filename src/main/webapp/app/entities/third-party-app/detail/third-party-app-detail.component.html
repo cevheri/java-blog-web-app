@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="thirdPartyApp">
+      <h2 data-cy="thirdPartyAppDetailsHeading"><span jhiTranslate="blogApp.thirdPartyApp.detail.title">Third Party App</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ thirdPartyApp.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.thirdPartyApp.name" [ngbTooltip]="'blogApp.thirdPartyApp.help.name' | translate">Name</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'blogApp.ThirdPartyAppName.' + thirdPartyApp.name }}">{{ thirdPartyApp.name }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="blogApp.thirdPartyApp.baseUrl" [ngbTooltip]="'blogApp.thirdPartyApp.help.baseUrl' | translate">Base Url</span>
+        </dt>
+        <dd>
+          <span>{{ thirdPartyApp.baseUrl }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="blogApp.thirdPartyApp.accessKey" [ngbTooltip]="'blogApp.thirdPartyApp.help.accessKey' | translate"
+            >Access Key</span
+          >
+        </dt>
+        <dd>
+          <span>{{ thirdPartyApp.accessKey }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="blogApp.thirdPartyApp.authorId" [ngbTooltip]="'blogApp.thirdPartyApp.help.authorId' | translate"
+            >Author Id</span
+          >
+        </dt>
+        <dd>
+          <span>{{ thirdPartyApp.authorId }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="blogApp.thirdPartyApp.creatingPostApi" [ngbTooltip]="'blogApp.thirdPartyApp.help.creatingPostApi' | translate"
+            >Creating Post Api</span
+          >
+        </dt>
+        <dd>
+          <span>{{ thirdPartyApp.creatingPostApi }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="blogApp.thirdPartyApp.readPostApi" [ngbTooltip]="'blogApp.thirdPartyApp.help.readPostApi' | translate"
+            >Read Post Api</span
+          >
+        </dt>
+        <dd>
+          <span>{{ thirdPartyApp.readPostApi }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="blogApp.thirdPartyApp.active" [ngbTooltip]="'blogApp.thirdPartyApp.help.active' | translate">Active</span>
+        </dt>
+        <dd>
+          <span>{{ thirdPartyApp.active }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/third-party-app', thirdPartyApp.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

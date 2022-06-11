@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="integrationLog">
+      <h2 data-cy="integrationLogDetailsHeading"><span jhiTranslate="blogApp.integrationLog.detail.title">Integration Log</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ integrationLog.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.integrationLog.createdBy">Created By</span></dt>
+        <dd>
+          <span>{{ integrationLog.createdBy }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.integrationLog.createdDate">Created Date</span></dt>
+        <dd>
+          <span>{{ integrationLog.createdDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.integrationLog.integrationName">Integration Name</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'blogApp.ThirdPartyAppName.' + integrationLog.integrationName }}">{{
+            integrationLog.integrationName
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.integrationLog.apiUrl">Api Url</span></dt>
+        <dd>
+          <span>{{ integrationLog.apiUrl }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.integrationLog.exitCode">Exit Code</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'blogApp.ExitCodeType.' + integrationLog.exitCode }}">{{ integrationLog.exitCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.integrationLog.requestData">Request Data</span></dt>
+        <dd>
+          <span>{{ integrationLog.requestData }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.integrationLog.responseData">Response Data</span></dt>
+        <dd>
+          <span>{{ integrationLog.responseData }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.integrationLog.errorCode">Error Code</span></dt>
+        <dd>
+          <span>{{ integrationLog.errorCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.integrationLog.errorMessage">Error Message</span></dt>
+        <dd>
+          <span>{{ integrationLog.errorMessage }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/integration-log', integrationLog.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

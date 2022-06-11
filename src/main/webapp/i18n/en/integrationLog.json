@@ -1,0 +1,32 @@
+{
+  "blogApp": {
+    "integrationLog": {
+      "home": {
+        "title": "Integration Logs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Integration Log",
+        "createOrEditLabel": "Create or edit a Integration Log",
+        "notFound": "No Integration Logs found"
+      },
+      "created": "A new Integration Log is created with identifier {{ param }}",
+      "updated": "A Integration Log is updated with identifier {{ param }}",
+      "deleted": "A Integration Log is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Integration Log {{ id }}?"
+      },
+      "detail": {
+        "title": "Integration Log"
+      },
+      "id": "ID",
+      "createdBy": "Created By",
+      "createdDate": "Created Date",
+      "integrationName": "Integration Name",
+      "apiUrl": "Api Url",
+      "exitCode": "Exit Code",
+      "requestData": "Request Data",
+      "responseData": "Response Data",
+      "errorCode": "Error Code",
+      "errorMessage": "Error Message"
+    }
+  }
+}

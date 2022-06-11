@@ -1,0 +1,9 @@
+{
+  "blogApp": {
+    "ExitCodeType": {
+      "null": "",
+      "SUCCESS": "SUCCESS",
+      "ERROR": "ERROR"
+    }
+  }
+}

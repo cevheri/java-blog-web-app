@@ -1,0 +1,189 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-third-party-app-heading"
+        data-cy="ThirdPartyAppCreateUpdateHeading"
+        jhiTranslate="blogApp.thirdPartyApp.home.createOrEditLabel"
+      >
+        Create or edit a Third Party App
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="blogApp.thirdPartyApp.name"
+            for="field_name"
+            [ngbTooltip]="'blogApp.thirdPartyApp.help.name' | translate"
+            >Name</label
+          >
+          <select class="form-control" name="name" formControlName="name" id="field_name" data-cy="name">
+            <option [ngValue]="null">{{ 'blogApp.ThirdPartyAppName.null' | translate }}</option>
+            <option *ngFor="let thirdPartyAppName of thirdPartyAppNameValues" [value]="thirdPartyAppName">
+              {{ 'blogApp.ThirdPartyAppName.' + thirdPartyAppName | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="blogApp.thirdPartyApp.baseUrl"
+            for="field_baseUrl"
+            [ngbTooltip]="'blogApp.thirdPartyApp.help.baseUrl' | translate"
+            >Base Url</label
+          >
+          <input type="text" class="form-control" name="baseUrl" id="field_baseUrl" data-cy="baseUrl" formControlName="baseUrl" />
+          <div *ngIf="editForm.get('baseUrl')!.invalid && (editForm.get('baseUrl')!.dirty || editForm.get('baseUrl')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('baseUrl')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 1000 }"
+            >
+              This field cannot be longer than 1000 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="blogApp.thirdPartyApp.accessKey"
+            for="field_accessKey"
+            [ngbTooltip]="'blogApp.thirdPartyApp.help.accessKey' | translate"
+            >Access Key</label
+          >
+          <input type="text" class="form-control" name="accessKey" id="field_accessKey" data-cy="accessKey" formControlName="accessKey" />
+          <div *ngIf="editForm.get('accessKey')!.invalid && (editForm.get('accessKey')!.dirty || editForm.get('accessKey')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('accessKey')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 1000 }"
+            >
+              This field cannot be longer than 1000 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="blogApp.thirdPartyApp.authorId"
+            for="field_authorId"
+            [ngbTooltip]="'blogApp.thirdPartyApp.help.authorId' | translate"
+            >Author Id</label
+          >
+          <input type="text" class="form-control" name="authorId" id="field_authorId" data-cy="authorId" formControlName="authorId" />
+          <div *ngIf="editForm.get('authorId')!.invalid && (editForm.get('authorId')!.dirty || editForm.get('authorId')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('authorId')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 1000 }"
+            >
+              This field cannot be longer than 1000 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="blogApp.thirdPartyApp.creatingPostApi"
+            for="field_creatingPostApi"
+            [ngbTooltip]="'blogApp.thirdPartyApp.help.creatingPostApi' | translate"
+            >Creating Post Api</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="creatingPostApi"
+            id="field_creatingPostApi"
+            data-cy="creatingPostApi"
+            formControlName="creatingPostApi"
+          />
+          <div
+            *ngIf="
+              editForm.get('creatingPostApi')!.invalid &&
+              (editForm.get('creatingPostApi')!.dirty || editForm.get('creatingPostApi')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('creatingPostApi')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 1000 }"
+            >
+              This field cannot be longer than 1000 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="blogApp.thirdPartyApp.readPostApi"
+            for="field_readPostApi"
+            [ngbTooltip]="'blogApp.thirdPartyApp.help.readPostApi' | translate"
+            >Read Post Api</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="readPostApi"
+            id="field_readPostApi"
+            data-cy="readPostApi"
+            formControlName="readPostApi"
+          />
+          <div *ngIf="editForm.get('readPostApi')!.invalid && (editForm.get('readPostApi')!.dirty || editForm.get('readPostApi')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('readPostApi')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 1000 }"
+            >
+              This field cannot be longer than 1000 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            jhiTranslate="blogApp.thirdPartyApp.active"
+            for="field_active"
+            [ngbTooltip]="'blogApp.thirdPartyApp.help.active' | translate"
+            >Active</label
+          >
+          <input type="checkbox" class="form-check" name="active" id="field_active" data-cy="active" formControlName="active" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

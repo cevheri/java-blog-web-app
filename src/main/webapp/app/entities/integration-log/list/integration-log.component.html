@@ -1,0 +1,130 @@
+<div>
+  <h2 id="page-heading" data-cy="IntegrationLogHeading">
+    <span jhiTranslate="blogApp.integrationLog.home.title">Integration Logs</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="blogApp.integrationLog.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-integration-log"
+        [routerLink]="['/integration-log/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="blogApp.integrationLog.home.createLabel"> Create a new Integration Log </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="integrationLogs?.length === 0">
+    <span jhiTranslate="blogApp.integrationLog.home.notFound">No Integration Logs found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="integrationLogs && integrationLogs.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="createdBy">
+            <span jhiTranslate="blogApp.integrationLog.createdBy">Created By</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="createdDate">
+            <span jhiTranslate="blogApp.integrationLog.createdDate">Created Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="integrationName">
+            <span jhiTranslate="blogApp.integrationLog.integrationName">Integration Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="apiUrl">
+            <span jhiTranslate="blogApp.integrationLog.apiUrl">Api Url</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="exitCode">
+            <span jhiTranslate="blogApp.integrationLog.exitCode">Exit Code</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="requestData">
+            <span jhiTranslate="blogApp.integrationLog.requestData">Request Data</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="responseData">
+            <span jhiTranslate="blogApp.integrationLog.responseData">Response Data</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="errorCode">
+            <span jhiTranslate="blogApp.integrationLog.errorCode">Error Code</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="errorMessage">
+            <span jhiTranslate="blogApp.integrationLog.errorMessage">Error Message</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let integrationLog of integrationLogs; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/integration-log', integrationLog.id, 'view']">{{ integrationLog.id }}</a>
+          </td>
+          <td>{{ integrationLog.createdBy }}</td>
+          <td>{{ integrationLog.createdDate | formatMediumDatetime }}</td>
+          <td jhiTranslate="{{ 'blogApp.ThirdPartyAppName.' + integrationLog.integrationName }}">{{ integrationLog.integrationName }}</td>
+          <td>{{ integrationLog.apiUrl }}</td>
+          <td jhiTranslate="{{ 'blogApp.ExitCodeType.' + integrationLog.exitCode }}">{{ integrationLog.exitCode }}</td>
+          <td>{{ integrationLog.requestData }}</td>
+          <td>{{ integrationLog.responseData }}</td>
+          <td>{{ integrationLog.errorCode }}</td>
+          <td>{{ integrationLog.errorMessage }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/integration-log', integrationLog.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/integration-log', integrationLog.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(integrationLog)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="integrationLogs && integrationLogs.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

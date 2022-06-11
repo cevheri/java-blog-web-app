@@ -1,0 +1,120 @@
+<div>
+  <h2 id="page-heading" data-cy="ThirdPartyAppHeading">
+    <span jhiTranslate="blogApp.thirdPartyApp.home.title">Third Party Apps</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="blogApp.thirdPartyApp.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-third-party-app"
+        [routerLink]="['/third-party-app/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="blogApp.thirdPartyApp.home.createLabel"> Create a new Third Party App </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="thirdPartyApps?.length === 0">
+    <span jhiTranslate="blogApp.thirdPartyApp.home.notFound">No Third Party Apps found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="thirdPartyApps && thirdPartyApps.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="name"><span jhiTranslate="blogApp.thirdPartyApp.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="baseUrl">
+            <span jhiTranslate="blogApp.thirdPartyApp.baseUrl">Base Url</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="accessKey">
+            <span jhiTranslate="blogApp.thirdPartyApp.accessKey">Access Key</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="authorId">
+            <span jhiTranslate="blogApp.thirdPartyApp.authorId">Author Id</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="creatingPostApi">
+            <span jhiTranslate="blogApp.thirdPartyApp.creatingPostApi">Creating Post Api</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="readPostApi">
+            <span jhiTranslate="blogApp.thirdPartyApp.readPostApi">Read Post Api</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="active">
+            <span jhiTranslate="blogApp.thirdPartyApp.active">Active</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let thirdPartyApp of thirdPartyApps; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/third-party-app', thirdPartyApp.id, 'view']">{{ thirdPartyApp.id }}</a>
+          </td>
+          <td jhiTranslate="{{ 'blogApp.ThirdPartyAppName.' + thirdPartyApp.name }}">{{ thirdPartyApp.name }}</td>
+          <td>{{ thirdPartyApp.baseUrl }}</td>
+          <td>{{ thirdPartyApp.accessKey }}</td>
+          <td>{{ thirdPartyApp.authorId }}</td>
+          <td>{{ thirdPartyApp.creatingPostApi }}</td>
+          <td>{{ thirdPartyApp.readPostApi }}</td>
+          <td>{{ thirdPartyApp.active }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/third-party-app', thirdPartyApp.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/third-party-app', thirdPartyApp.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(thirdPartyApp)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="thirdPartyApps && thirdPartyApps.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

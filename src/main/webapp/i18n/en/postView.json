@@ -1,0 +1,24 @@
+{
+  "blogApp": {
+    "postView": {
+      "home": {
+        "title": "Post Views",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Post View",
+        "createOrEditLabel": "Create or edit a Post View",
+        "notFound": "No Post Views found"
+      },
+      "created": "A new Post View is created with identifier {{ param }}",
+      "updated": "A Post View is updated with identifier {{ param }}",
+      "deleted": "A Post View is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Post View {{ id }}?"
+      },
+      "detail": {
+        "title": "Post View"
+      },
+      "id": "ID",
+      "post": "Post"
+    }
+  }
+}

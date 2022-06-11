@@ -1,0 +1,28 @@
+{
+  "blogApp": {
+    "postComment": {
+      "home": {
+        "title": "Post Comments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Post Comment",
+        "createOrEditLabel": "Create or edit a Post Comment",
+        "notFound": "No Post Comments found"
+      },
+      "created": "A new Post Comment is created with identifier {{ param }}",
+      "updated": "A Post Comment is updated with identifier {{ param }}",
+      "deleted": "A Post Comment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Post Comment {{ id }}?"
+      },
+      "detail": {
+        "title": "Post Comment"
+      },
+      "id": "ID",
+      "commentText": "Comment Text",
+      "post": "Post",
+      "help": {
+        "commentText": "Comment Text information"
+      }
+    }
+  }
+}

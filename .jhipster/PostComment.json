@@ -1,0 +1,32 @@
+{
+  "applications": "*",
+  "changelogDate": "20220611195844",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "post_comment",
+  "fields": [
+    {
+      "fieldName": "commentText",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength", "required"],
+      "fieldValidateRulesMaxlength": "4000",
+      "fieldValidateRulesMinlength": "2",
+      "javadoc": "Comment Text information"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "System User Post Comments",
+  "jpaMetamodelFiltering": false,
+  "name": "PostComment",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "post",
+      "relationshipName": "post",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

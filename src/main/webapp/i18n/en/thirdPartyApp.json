@@ -1,0 +1,39 @@
+{
+  "blogApp": {
+    "thirdPartyApp": {
+      "home": {
+        "title": "Third Party Apps",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Third Party App",
+        "createOrEditLabel": "Create or edit a Third Party App",
+        "notFound": "No Third Party Apps found"
+      },
+      "created": "A new Third Party App is created with identifier {{ param }}",
+      "updated": "A Third Party App is updated with identifier {{ param }}",
+      "deleted": "A Third Party App is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Third Party App {{ id }}?"
+      },
+      "detail": {
+        "title": "Third Party App"
+      },
+      "id": "ID",
+      "name": "Name",
+      "baseUrl": "Base Url",
+      "accessKey": "Access Key",
+      "authorId": "Author Id",
+      "creatingPostApi": "Creating Post Api",
+      "readPostApi": "Read Post Api",
+      "active": "Active",
+      "help": {
+        "name": "App Name : MEDIUM etc.",
+        "baseUrl": "app base url : https:",
+        "accessKey": "app access key :2418f8eabee116684110f01ec98631f35f7528a88c33312e9a339fb1e9de46ec9",
+        "authorId": "app access key :2418f8eabee116684110f01ec98631f35f7528a88c33312e9a339fb1e9de46ec9",
+        "creatingPostApi": "create post api endpoint - POST /users/{{authorId}}/posts",
+        "readPostApi": "Listing the user’s publications api endpoint - GET  /users/{{userId}}/publications",
+        "active": "Integration active or passive information"
+      }
+    }
+  }
+}

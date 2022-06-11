@@ -1,0 +1,12 @@
+
+
+  ${AnsiColor.RED} ██████╗${AnsiColor.GREEN}███████╗██╗   ██╗██╗  ██╗███████╗██████╗ ██╗
+  ${AnsiColor.RED}██╔════╝${AnsiColor.GREEN}██╔════╝██║   ██║██║  ██║██╔════╝██╔══██╗██║
+  ${AnsiColor.RED}██║     ${AnsiColor.GREEN}█████╗  ██║   ██║███████║█████╗  ██████╔╝██║
+  ${AnsiColor.RED}██║     ${AnsiColor.GREEN}██╔══╝  ╚██╗ ██╔╝██╔══██║██╔══╝  ██╔══██╗██║
+  ${AnsiColor.RED}╚██████╗${AnsiColor.GREEN}███████╗ ╚████╔╝ ██║  ██║███████╗██║  ██║██║
+  ${AnsiColor.RED} ╚═════╝${AnsiColor.GREEN}╚══════╝  ╚═══╝  ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝
+
+
+${AnsiColor.BRIGHT_BLUE}:: Cevheri's Blog Web-app  :: Running Spring Boot ${spring-boot.version} ::
+:: https://cevheri-blog.herokuapp.com ::${AnsiColor.DEFAULT}

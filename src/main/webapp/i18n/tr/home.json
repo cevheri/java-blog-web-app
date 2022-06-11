@@ -1,0 +1,19 @@
+{
+  "home": {
+    "title": "Merhaba, Java Blog!",
+    "subtitle": "Burası Ana Sayfanız",
+    "logged": {
+      "message": "\"{{username}}\" olarak giriş yaptınız."
+    },
+    "question": "Java Blog hakkında sorularınız için:",
+    "link": {
+      "homepage": "Java Blog ana sayfa",
+      "stackoverflow": "Stack Overflow'da Java Blog",
+      "bugtracker": "Java Blog hata yönetimi",
+      "chat": "Java Blog genel sohbet odası",
+      "follow": "Twitter'da @JavaBlog adresinden ulaşabilirsiniz"
+    },
+    "like": "Java Blog'u beğendiysenizi yıldız vermeyi unutmayın",
+    "github": "GitHub"
+  }
+}

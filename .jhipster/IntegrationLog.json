@@ -1,0 +1,65 @@
+{
+  "applications": "*",
+  "changelogDate": "20220611195848",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "integration_log",
+  "fields": [
+    {
+      "fieldName": "createdBy",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "integrationName",
+      "fieldType": "ThirdPartyAppName",
+      "fieldTypeJavadoc": "Third party integration app name list",
+      "fieldValues": "MEDIUM"
+    },
+    {
+      "fieldName": "apiUrl",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000"
+    },
+    {
+      "fieldName": "exitCode",
+      "fieldType": "ExitCodeType",
+      "fieldValues": "SUCCESS,ERROR"
+    },
+    {
+      "fieldName": "requestData",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "responseData",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "errorCode",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000"
+    },
+    {
+      "fieldName": "errorMessage",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "4000"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "IntegrationLog",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

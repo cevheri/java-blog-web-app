@@ -1,0 +1,23 @@
+{
+  "applications": "*",
+  "changelogDate": "20220611195845",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "post_view",
+  "fields": [],
+  "fluentMethods": true,
+  "javadoc": "System User view for Post Analytics",
+  "jpaMetamodelFiltering": false,
+  "name": "PostView",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "post",
+      "relationshipName": "post",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

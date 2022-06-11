@@ -1,0 +1,23 @@
+{
+  "applications": "*",
+  "changelogDate": "20220611195846",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "post_like",
+  "fields": [],
+  "fluentMethods": true,
+  "javadoc": "System User Post Likes",
+  "jpaMetamodelFiltering": false,
+  "name": "PostLike",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "title",
+      "otherEntityName": "post",
+      "relationshipName": "post",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,64 @@
+{
+  "applications": "*",
+  "changelogDate": "20220611195847",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "third_party_app",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "ThirdPartyAppName",
+      "fieldTypeJavadoc": "Third party integration app name list",
+      "fieldValues": "MEDIUM",
+      "javadoc": "App Name : MEDIUM etc."
+    },
+    {
+      "fieldName": "baseUrl",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000",
+      "javadoc": "app base url : https:"
+    },
+    {
+      "fieldName": "accessKey",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000",
+      "javadoc": "app access key :2418f8eabee116684110f01ec98631f35f7528a88c33312e9a339fb1e9de46ec9"
+    },
+    {
+      "fieldName": "authorId",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000",
+      "javadoc": "app access key :2418f8eabee116684110f01ec98631f35f7528a88c33312e9a339fb1e9de46ec9"
+    },
+    {
+      "fieldName": "creatingPostApi",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000",
+      "javadoc": "create post api endpoint - POST /users/{{authorId}}/posts"
+    },
+    {
+      "fieldName": "readPostApi",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000",
+      "javadoc": "Listing the user’s publications api endpoint - GET  /users/{{userId}}/publications"
+    },
+    {
+      "fieldName": "active",
+      "fieldType": "Boolean",
+      "javadoc": "Integration active or passive information"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "Third party integration configuration. BaseURL, accessKey etc.",
+  "jpaMetamodelFiltering": false,
+  "name": "ThirdPartyApp",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,63 @@
+{
+  "applications": "*",
+  "changelogDate": "20220611195842",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "post",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "250",
+      "fieldValidateRulesMinlength": "3",
+      "javadoc": "Post title information"
+    },
+    {
+      "fieldName": "content",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text",
+      "fieldValidateRules": ["required"],
+      "javadoc": "Post content information"
+    },
+    {
+      "fieldName": "paidMemberOnly",
+      "fieldType": "Boolean",
+      "javadoc": "Paid Membership"
+    },
+    {
+      "fieldName": "publishThirdPartyApp",
+      "fieldType": "Boolean",
+      "javadoc": "Publish third party app. for example Medium."
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "Post page information. System users only!",
+  "jpaMetamodelFiltering": false,
+  "name": "Post",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "user",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "blog",
+      "relationshipName": "blog",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "tag",
+      "otherEntityRelationshipName": "post",
+      "ownerSide": true,
+      "relationshipName": "tag",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,33 @@
+{
+  "applications": "*",
+  "changelogDate": "20220611195843",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "tag",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "50",
+      "fieldValidateRulesMinlength": "2",
+      "javadoc": "Tag information"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "Tag information, System users only! Tag Bilgisi (opsiyonel ve birden fazla) bulunması gerekmektedir.",
+  "jpaMetamodelFiltering": false,
+  "name": "Tag",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "post",
+      "otherEntityRelationshipName": "tag",
+      "ownerSide": false,
+      "relationshipName": "post",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

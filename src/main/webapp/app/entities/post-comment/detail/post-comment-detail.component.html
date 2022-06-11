@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="postComment">
+      <h2 data-cy="postCommentDetailsHeading"><span jhiTranslate="blogApp.postComment.detail.title">Post Comment</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ postComment.id }}</span>
+        </dd>
+        <dt>
+          <span jhiTranslate="blogApp.postComment.commentText" [ngbTooltip]="'blogApp.postComment.help.commentText' | translate"
+            >Comment Text</span
+          >
+        </dt>
+        <dd>
+          <span>{{ postComment.commentText }}</span>
+        </dd>
+        <dt><span jhiTranslate="blogApp.postComment.post">Post</span></dt>
+        <dd>
+          <div *ngIf="postComment.post">
+            <a [routerLink]="['/post', postComment.post?.id, 'view']">{{ postComment.post?.title }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/post-comment', postComment.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
