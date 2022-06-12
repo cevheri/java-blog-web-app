@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class UserApi {
-    public static String AUTHOR_ID;
+    public static String AUTHOR_ID= "12974e025f39ae31b1e4c4a419f4f8210f1b399d20e39f24d5eeb3f1715d041e4";
     private final String resourceUrl = "/me";
     private final String url = EndPoint.BASE_URL + resourceUrl;
 

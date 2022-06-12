@@ -1,6 +1,8 @@
 package com.cevheri.blog.service.medium;
 
-public class ApiError {
+import java.io.Serializable;
+
+public class ApiError implements Serializable {
     private String code;
     private String message;
 

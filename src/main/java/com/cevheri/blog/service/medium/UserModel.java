@@ -1,8 +1,9 @@
 package com.cevheri.blog.service.medium;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class UserModel {
+public class UserModel extends AbstractModel implements Serializable {
     private String id;
     private String username;
     private String name;

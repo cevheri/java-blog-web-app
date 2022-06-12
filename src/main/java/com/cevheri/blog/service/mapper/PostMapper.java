@@ -4,12 +4,12 @@ import com.cevheri.blog.domain.Blog;
 import com.cevheri.blog.domain.Post;
 import com.cevheri.blog.domain.Tag;
 import com.cevheri.blog.domain.User;
-import com.cevheri.blog.service.dto.BlogDTO;
-import com.cevheri.blog.service.dto.PostDTO;
-import com.cevheri.blog.service.dto.TagDTO;
-import com.cevheri.blog.service.dto.UserDTO;
+import com.cevheri.blog.service.dto.*;
+
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import com.cevheri.blog.service.medium.PostResponse;
 import org.mapstruct.*;
 
 /**
@@ -24,6 +24,10 @@ public interface PostMapper extends EntityMapper<PostDTO, Post> {
 
     @Mapping(target = "removeTag", ignore = true)
     Post toEntity(PostDTO postDTO);
+
+    @Mapping(target = "removeTag", ignore = true)
+    Post toEntity(UpdatePostDTO postDTO);
+
 
     @Named("userLogin")
     @BeanMapping(ignoreByDefault = true)
@@ -47,4 +51,21 @@ public interface PostMapper extends EntityMapper<PostDTO, Post> {
     default Set<TagDTO> toDtoTagNameSet(Set<Tag> tag) {
         return tag.stream().map(this::toDtoTagName).collect(Collectors.toSet());
     }
+
+    default PostResponse toPostModel(PostDTO postDTO){
+        PostResponse result = new PostResponse();
+        PostResponse.PostData model = result.getData();
+        model.setId(null);
+        model.setAuthorId(null);
+        model.setTitle(postDTO.getTitle());
+        model.setTags(postDTO.getTags().stream().map(TagDTO::getName).collect(Collectors.toList()));
+        model.setCanonicalUrl("https://cevheri-blog.herokuapp.com");
+        model.setContent(postDTO.getContent());
+        model.setLicense(null);
+        model.setContentFormat("html");
+        model.setPublishStatus(null);
+        result.setData(model);
+        return result;
+    }
+
 }
