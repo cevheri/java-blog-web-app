@@ -45,4 +45,5 @@ public interface PostRepository extends PostRepositoryWithBagRelationships, JpaR
     Optional<Post> findOneWithToOneRelationships(@Param("id") Long id);
 
     Page<Post> findByBlogUserLoginOrderByCreatedDateDesc(String currentUserLogin, Pageable pageable);
+
 }

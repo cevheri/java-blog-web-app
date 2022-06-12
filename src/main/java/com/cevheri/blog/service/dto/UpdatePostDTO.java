@@ -1,18 +1,20 @@
 package com.cevheri.blog.service.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import javax.persistence.Lob;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.Lob;
-import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.cevheri.blog.domain.Post} entity.
  */
 @Schema(description = "Post page information. System users only!")
-public class PostDTO implements Serializable {
+public class UpdatePostDTO implements Serializable {
 
     private Long id;
 
@@ -44,22 +46,8 @@ public class PostDTO implements Serializable {
     @Schema(description = "Publish third party app. for example Medium.")
     private Boolean publishThirdPartyApp;
 
-    private UserDTO user;
-
-    private BlogDTO blog;
-
     private Set<TagDTO> tags = new HashSet<>();
 
-
-    private String integrationId;
-
-    public String getIntegrationId() {
-        return integrationId;
-    }
-
-    public void setIntegrationId(String integrationId) {
-        this.integrationId = integrationId;
-    }
 
     public Long getId() {
         return id;
@@ -101,22 +89,6 @@ public class PostDTO implements Serializable {
         this.publishThirdPartyApp = publishThirdPartyApp;
     }
 
-    public UserDTO getUser() {
-        return user;
-    }
-
-    public void setUser(UserDTO user) {
-        this.user = user;
-    }
-
-    public BlogDTO getBlog() {
-        return blog;
-    }
-
-    public void setBlog(BlogDTO blog) {
-        this.blog = blog;
-    }
-
     public Set<TagDTO> getTags() {
         return tags;
     }
@@ -130,11 +102,11 @@ public class PostDTO implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof PostDTO)) {
+        if (!(o instanceof UpdatePostDTO)) {
             return false;
         }
 
-        PostDTO postDTO = (PostDTO) o;
+        UpdatePostDTO postDTO = (UpdatePostDTO) o;
         if (this.id == null) {
             return false;
         }
@@ -155,9 +127,6 @@ public class PostDTO implements Serializable {
             ", content='" + getContent() + "'" +
             ", paidMemberOnly='" + getPaidMemberOnly() + "'" +
             ", publishThirdPartyApp='" + getPublishThirdPartyApp() + "'" +
-            ", integrationId='" + getIntegrationId() + "'" +
-            ", user=" + getUser() +
-            ", blog=" + getBlog() +
             ", tags=" + getTags() +
             "}";
     }

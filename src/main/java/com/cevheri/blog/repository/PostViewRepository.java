@@ -37,4 +37,6 @@ public interface PostViewRepository extends JpaRepository<PostView, Long> {
 
     @Query("select postView from PostView postView left join fetch postView.post where postView.id =:id")
     Optional<PostView> findOneWithToOneRelationships(@Param("id") Long id);
+
+    Integer countByPost_Id(@Param("postId") Long postId);
 }

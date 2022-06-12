@@ -89,4 +89,9 @@
             <column name="last_modified_date" type="timestamp"/>
         </addColumn>
     </changeSet>
+    <changeSet id="post-03" author="cevheri">
+        <addColumn tableName="post">
+            <column name="integration_id" type="varchar(100)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

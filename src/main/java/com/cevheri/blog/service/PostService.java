@@ -2,6 +2,8 @@ package com.cevheri.blog.service;
 
 import com.cevheri.blog.service.dto.PostDTO;
 import java.util.Optional;
+
+import com.cevheri.blog.service.dto.UpdatePostDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -23,7 +25,7 @@ public interface PostService {
      * @param postDTO the entity to update.
      * @return the persisted entity.
      */
-    PostDTO update(PostDTO postDTO);
+    PostDTO update(UpdatePostDTO postDTO);
 
     /**
      * Partially updates a post.
@@ -63,4 +65,6 @@ public interface PostService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Integer viewCount(Long id);
 }

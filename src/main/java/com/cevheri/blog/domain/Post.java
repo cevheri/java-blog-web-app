@@ -72,6 +72,16 @@ public class Post extends AbstractAuditingEntity
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
+    private String integrationId;
+
+    public String getIntegrationId() {
+        return integrationId;
+    }
+
+    public void setIntegrationId(String integrationId) {
+        this.integrationId = integrationId;
+    }
+
     public Long getId() {
         return this.id;
     }
@@ -216,6 +226,7 @@ public class Post extends AbstractAuditingEntity
             ", content='" + getContent() + "'" +
             ", paidMemberOnly='" + getPaidMemberOnly() + "'" +
             ", publishThirdPartyApp='" + getPublishThirdPartyApp() + "'" +
+            ", integrationId='" + getIntegrationId() + "'" +
             "}";
     }
 }

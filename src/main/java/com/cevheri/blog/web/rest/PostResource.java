@@ -5,7 +5,9 @@ import com.cevheri.blog.repository.PostRepository;
 import com.cevheri.blog.security.SecurityUtils;
 import com.cevheri.blog.service.PostService;
 import com.cevheri.blog.service.dto.PostDTO;
+import com.cevheri.blog.service.dto.UpdatePostDTO;
 import com.cevheri.blog.web.rest.errors.BadRequestAlertException;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,12 +66,11 @@ public class PostResource {
         if (postDTO.getId() != null) {
             throw new BadRequestAlertException("A new post cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PostDTO result = postService.save(postDTO);
-
-        if (postDTO.getBlog() != null &&
-            !postDTO.getBlog().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+        if (!postDTO.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
             return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
+        PostDTO result = postService.save(postDTO);
+
         return ResponseEntity
             .created(new URI("/api/posts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -78,8 +80,8 @@ public class PostResource {
     /**
      * {@code PUT  /posts/:id} : Updates an existing post.
      *
-     * @param id the id of the postDTO to save.
-     * @param postDTO the postDTO to update.
+     * @param id            the id of the postDTO to save.
+     * @param updatePostDTO the postDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated postDTO,
      * or with status {@code 400 (Bad Request)} if the postDTO is not valid,
      * or with status {@code 500 (Internal Server Error)} if the postDTO couldn't be updated.
@@ -88,38 +90,42 @@ public class PostResource {
     @PutMapping("/posts/{id}")
     public ResponseEntity<?> updatePost(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody PostDTO postDTO
+        @Valid @RequestBody UpdatePostDTO updatePostDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update Post : {}, {}", id, postDTO);
-        if (postDTO.getId() == null) {
+        log.debug("REST request to update Post : {}, {}", id, updatePostDTO);
+        if (updatePostDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, postDTO.getId())) {
+        if (!Objects.equals(id, updatePostDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
-        if (!postRepository.existsById(id)) {
+//        if (!postRepository.existsById(id)) {
+//            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+//        }
+
+        var postDTO = postService.findOne(id);
+        if (postDTO.isEmpty()) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-
-        if (postDTO.getBlog() != null &&
-            !postDTO.getBlog().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+        //BusinessRule : Everyone can update their own post.
+        if (!postDTO.get().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
             return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
 
 
-        PostDTO result = postService.update(postDTO);
+        PostDTO result = postService.update(updatePostDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, postDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, updatePostDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /posts/:id} : Partial updates given fields of an existing post, field will ignore if it is null
      *
-     * @param id the id of the postDTO to save.
+     * @param id      the id of the postDTO to save.
      * @param postDTO the postDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated postDTO,
      * or with status {@code 400 (Bad Request)} if the postDTO is not valid,
@@ -127,7 +133,7 @@ public class PostResource {
      * or with status {@code 500 (Internal Server Error)} if the postDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/posts/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/posts/{id}", consumes = {"application/json", "application/merge-patch+json"})
     public ResponseEntity<PostDTO> partialUpdatePost(
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody PostDTO postDTO
@@ -155,7 +161,7 @@ public class PostResource {
     /**
      * {@code GET  /posts} : get all the posts.
      *
-     * @param pageable the pagination information.
+     * @param pageable  the pagination information.
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of posts in body.
      */
@@ -185,13 +191,20 @@ public class PostResource {
     public ResponseEntity<?> getPost(@PathVariable Long id) {
         log.debug("REST request to get Post : {}", id);
         Optional<PostDTO> postDTO = postService.findOne(id);
-
-//        if (postDTO.isPresent() && postDTO.get().getBlog() != null &&
-//            !postDTO.get().getBlog().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
-//            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
-//        }
-
         return ResponseUtil.wrapOrNotFound(postDTO);
+    }
+
+    /**
+     * {@code GET  /posts/:id} : get the "id" post.
+     *
+     * @param id the id of the postDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the postDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/posts/{id}/view-count")
+    public ResponseEntity<Integer> getPostViewCount(@PathVariable Long id) {
+        log.debug("REST request to get Post : {}", id);
+        Integer result = postService.viewCount(id);
+        return ResponseEntity.ok(result);
     }
 
     /**
@@ -206,8 +219,8 @@ public class PostResource {
 
         //BusinessRule!!! Everyone can only delete their own Post.
         Optional<Post> result = postRepository.findOneWithEagerRelationships(id);
-        if (result.isPresent() && result.get().getBlog() != null &&
-            !result.get().getBlog().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+        if (result.isPresent() &&
+            !result.get().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
             return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
 

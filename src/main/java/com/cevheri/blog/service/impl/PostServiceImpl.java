@@ -2,10 +2,18 @@ package com.cevheri.blog.service.impl;
 
 import com.cevheri.blog.domain.Post;
 import com.cevheri.blog.repository.PostRepository;
+import com.cevheri.blog.repository.PostViewRepository;
 import com.cevheri.blog.service.PostService;
+import com.cevheri.blog.service.PostViewService;
+import com.cevheri.blog.service.ThirdPartyBlogService;
 import com.cevheri.blog.service.dto.PostDTO;
+import com.cevheri.blog.service.dto.PostViewDTO;
+import com.cevheri.blog.service.dto.UpdatePostDTO;
 import com.cevheri.blog.service.mapper.PostMapper;
+
 import java.util.Optional;
+
+import com.cevheri.blog.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -23,12 +31,21 @@ public class PostServiceImpl implements PostService {
     private final Logger log = LoggerFactory.getLogger(PostServiceImpl.class);
 
     private final PostRepository postRepository;
-
+    private final PostViewRepository postViewRepository;
     private final PostMapper postMapper;
+    private final ThirdPartyBlogService thirdPartyBlogService;
+    private final PostViewService postViewService;
 
-    public PostServiceImpl(PostRepository postRepository, PostMapper postMapper) {
+    public PostServiceImpl(PostRepository postRepository,
+                           PostViewRepository postViewRepository,
+                           PostMapper postMapper,
+                           ThirdPartyBlogService thirdPartyBlogService,
+                           PostViewService postViewService) {
         this.postRepository = postRepository;
+        this.postViewRepository = postViewRepository;
         this.postMapper = postMapper;
+        this.thirdPartyBlogService = thirdPartyBlogService;
+        this.postViewService = postViewService;
     }
 
     @Override
@@ -36,11 +53,19 @@ public class PostServiceImpl implements PostService {
         log.debug("Request to save Post : {}", postDTO);
         Post post = postMapper.toEntity(postDTO);
         post = postRepository.save(post);
+        if (postDTO.getPublishThirdPartyApp()) {
+
+            String integrationId = thirdPartyBlogService.sendPost(postDTO);
+
+            post.setIntegrationId(integrationId);
+            postRepository.save(post);
+        }
         return postMapper.toDto(post);
     }
 
+
     @Override
-    public PostDTO update(PostDTO postDTO) {
+    public PostDTO update(UpdatePostDTO postDTO) {
         log.debug("Request to save Post : {}", postDTO);
         Post post = postMapper.toEntity(postDTO);
         post = postRepository.save(post);
@@ -74,15 +99,31 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<PostDTO> findOne(Long id) {
         log.debug("Request to get Post : {}", id);
-        return postRepository.findOneWithEagerRelationships(id).map(postMapper::toDto);
+        var result = postRepository.findOneWithEagerRelationships(id).map(postMapper::toDto);
+        result.ifPresentOrElse(t -> {
+                PostViewDTO postView = new PostViewDTO();
+                postView.setPost(t);
+                postViewService.save(postView);
+            },
+            () -> {
+                throw new BadRequestAlertException("Entity not found", "post", "idnotfound");
+            }
+        );
+
+        return result;
     }
 
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Post : {}", id);
         postRepository.deleteById(id);
+    }
+
+    @Override
+    public Integer viewCount(Long id) {
+        log.debug("Request to ViewCount Post : {}", id);
+        return postViewRepository.countByPost_Id(id);
     }
 }
