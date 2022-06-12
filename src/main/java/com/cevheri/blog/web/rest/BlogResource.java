@@ -1,6 +1,7 @@
 package com.cevheri.blog.web.rest;
 
 import com.cevheri.blog.repository.BlogRepository;
+import com.cevheri.blog.security.SecurityUtils;
 import com.cevheri.blog.service.BlogService;
 import com.cevheri.blog.service.dto.BlogDTO;
 import com.cevheri.blog.web.rest.errors.BadRequestAlertException;
@@ -56,12 +57,18 @@ public class BlogResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/blogs")
-    public ResponseEntity<BlogDTO> createBlog(@Valid @RequestBody BlogDTO blogDTO) throws URISyntaxException {
+    public ResponseEntity<?> createBlog(@Valid @RequestBody BlogDTO blogDTO) throws URISyntaxException {
         log.debug("REST request to save Blog : {}", blogDTO);
         if (blogDTO.getId() != null) {
             throw new BadRequestAlertException("A new blog cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        if (!blogDTO.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+            return new ResponseEntity<>("error.http.403", HttpStatus.FORBIDDEN);
+        }
+
         BlogDTO result = blogService.save(blogDTO);
+
         return ResponseEntity
             .created(new URI("/api/blogs/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -79,7 +86,7 @@ public class BlogResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/blogs/{id}")
-    public ResponseEntity<BlogDTO> updateBlog(
+    public ResponseEntity<?> updateBlog(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody BlogDTO blogDTO
     ) throws URISyntaxException {
@@ -93,6 +100,11 @@ public class BlogResource {
 
         if (!blogRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        if (blogDTO.getUser() != null &&
+            !blogDTO.getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+            return new ResponseEntity<>("error.http.403", HttpStatus.FORBIDDEN);
         }
 
         BlogDTO result = blogService.update(blogDTO);
@@ -168,9 +180,14 @@ public class BlogResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the blogDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/blogs/{id}")
-    public ResponseEntity<BlogDTO> getBlog(@PathVariable Long id) {
+    public ResponseEntity<?> getBlog(@PathVariable Long id) {
         log.debug("REST request to get Blog : {}", id);
         Optional<BlogDTO> blogDTO = blogService.findOne(id);
+
+//        if (blogDTO.isPresent() && blogDTO.get().getUser() != null &&
+//            !blogDTO.get().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+//            return new ResponseEntity<>("error.http.403", HttpStatus.FORBIDDEN);
+//        }
         return ResponseUtil.wrapOrNotFound(blogDTO);
     }
 
@@ -181,8 +198,16 @@ public class BlogResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/blogs/{id}")
-    public ResponseEntity<Void> deleteBlog(@PathVariable Long id) {
+    public ResponseEntity<?> deleteBlog(@PathVariable Long id) {
         log.debug("REST request to delete Blog : {}", id);
+
+        //BusinessRule!!! Everyone can only delete their own blog.
+        Optional<BlogDTO> blogDTO = blogService.findOne(id);
+        if (blogDTO.isPresent() && blogDTO.get().getUser() != null &&
+            !blogDTO.get().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+            return new ResponseEntity<>("error.http.403", HttpStatus.FORBIDDEN);
+        }
+
         blogService.delete(id);
         return ResponseEntity
             .noContent()

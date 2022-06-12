@@ -1,6 +1,8 @@
 package com.cevheri.blog.web.rest;
 
+import com.cevheri.blog.domain.Post;
 import com.cevheri.blog.repository.PostRepository;
+import com.cevheri.blog.security.SecurityUtils;
 import com.cevheri.blog.service.PostService;
 import com.cevheri.blog.service.dto.PostDTO;
 import com.cevheri.blog.web.rest.errors.BadRequestAlertException;
@@ -56,12 +58,17 @@ public class PostResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/posts")
-    public ResponseEntity<PostDTO> createPost(@Valid @RequestBody PostDTO postDTO) throws URISyntaxException {
+    public ResponseEntity<?> createPost(@Valid @RequestBody PostDTO postDTO) throws URISyntaxException {
         log.debug("REST request to save Post : {}", postDTO);
         if (postDTO.getId() != null) {
             throw new BadRequestAlertException("A new post cannot already have an ID", ENTITY_NAME, "idexists");
         }
         PostDTO result = postService.save(postDTO);
+
+        if (postDTO.getBlog() != null &&
+            !postDTO.getBlog().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
+        }
         return ResponseEntity
             .created(new URI("/api/posts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -79,7 +86,7 @@ public class PostResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/posts/{id}")
-    public ResponseEntity<PostDTO> updatePost(
+    public ResponseEntity<?> updatePost(
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody PostDTO postDTO
     ) throws URISyntaxException {
@@ -94,6 +101,13 @@ public class PostResource {
         if (!postRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
+
+
+        if (postDTO.getBlog() != null &&
+            !postDTO.getBlog().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
+        }
+
 
         PostDTO result = postService.update(postDTO);
         return ResponseEntity
@@ -168,9 +182,15 @@ public class PostResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the postDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/posts/{id}")
-    public ResponseEntity<PostDTO> getPost(@PathVariable Long id) {
+    public ResponseEntity<?> getPost(@PathVariable Long id) {
         log.debug("REST request to get Post : {}", id);
         Optional<PostDTO> postDTO = postService.findOne(id);
+
+//        if (postDTO.isPresent() && postDTO.get().getBlog() != null &&
+//            !postDTO.get().getBlog().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+//            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
+//        }
+
         return ResponseUtil.wrapOrNotFound(postDTO);
     }
 
@@ -181,8 +201,16 @@ public class PostResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/posts/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+    public ResponseEntity<?> deletePost(@PathVariable Long id) {
         log.debug("REST request to delete Post : {}", id);
+
+        //BusinessRule!!! Everyone can only delete their own Post.
+        Optional<Post> result = postRepository.findOneWithEagerRelationships(id);
+        if (result.isPresent() && result.get().getBlog() != null &&
+            !result.get().getBlog().getUser().getLogin().equals(SecurityUtils.getCurrentUserLogin().orElse(""))) {
+            return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
+        }
+
         postService.delete(id);
         return ResponseEntity
             .noContent()
