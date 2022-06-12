@@ -8,21 +8,63 @@ services:
       - SPRING_PROFILES_ACTIVE=prod,api-docs
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
       - SPRING_DATASOURCE_URL=jdbc:postgresql://blog-postgresql:5432/blog
+      - SPRING_DATASOURCE_USERNAME=blog
+      - SPRING_DATASOURCE_PASSWORD=blog
       - SPRING_LIQUIBASE_URL=jdbc:postgresql://blog-postgresql:5432/blog
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:admin@host.docker.internal:8761/eureka/
       - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:
-      - 127.0.0.1:8080:8080
+      - "8080:8080"
+    depends_on:
+      - blog-postgresql
+      - eureka-server
+#      - zipkin
+      - jhipster-control-center
   blog-postgresql:
     image: postgres:14.2
     # volumes:
     #   - ~/volumes/jhipster/blog/postgresql/:/var/lib/postgresql/data/
     environment:
+      - POSTGRES_DB=blog
       - POSTGRES_USER=blog
-      - POSTGRES_PASSWORD=
+      - POSTGRES_PASSWORD=blog
       - POSTGRES_HOST_AUTH_METHOD=trust
-    # If you want to expose these ports outside your dev PC,
-    # remove the "127.0.0.1:" prefix
     ports:
-      - 127.0.0.1:5432:5432
+      - "5432:5432"
+  eureka-server:
+    image: taskbeez/eureka-server:master
+    hostname: eureka-server
+    ports:
+      - "8761:8761"
+#  config-server:
+#    image: hyness/spring-cloud-config-server:latest
+#    ports:
+#      - "8888:8888"
+#    links:
+#      - "eureka-server"
+#    volumes:
+#      - ./config-server/config:/app/config
+#  zipkin:
+#    image: openzipkin/zipkin:2.23
+#    ports:
+#      - "9411:9411"
+  jhipster-control-center:
+    image: 'jhipster/jhipster-control-center:v0.5.0'
+    command:
+      - /bin/sh
+      - -c
+      # Patch /etc/hosts to support resolving host.docker.internal to the internal IP address used by the host in all OSes
+      - echo "`ip route | grep default | cut -d ' ' -f3` host.docker.internal" | tee -a /etc/hosts > /dev/null && java -jar /jhipster-control-center.jar
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,api-docs,no
+      - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
+      - SPRING_SECURITY_USER_PASSWORD=admin
+      # The token should have the same value than the one declared in you Spring configuration under the jhipster.security.authentication.jwt.base64-secret configuration's entry
+      - JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET=NzI1ZDlhYWU4MjNiZDBlZjVhMTZiNjliMmRlNDA3N2QyM2MyYmIxYTE2ZWFmNzJmMzExMWZjMWNiMDhjZGY5NjQxNzUyZTg3Yjc0NmZiMTIxZGI5NTA2MzQ4MzlkNTE5Y2UzMDM2MWVkMTRkOWUyZTRlNTllNzJkMzEzOWRiNDY=
+      - SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_BLOG_0_URI=http://host.docker.internal:8080
+      - LOGGING_FILE_NAME=/tmp/jhipster-control-center.log
+    ports:
+      - "7419:7419"

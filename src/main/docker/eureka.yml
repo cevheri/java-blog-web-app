@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  eureka-server:
+    image: taskbeez/eureka-server:master
+    hostname: eureka-server
+    ports:
+      - "8761:8761"
+  config-server:
+    image: hyness/spring-cloud-config-server:latest
+    ports:
+      - "8888:8888"
+    links:
+      - "eureka-server"
+    volumes:
+      - ./config-server/config:/app/config

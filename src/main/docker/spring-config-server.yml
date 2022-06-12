@@ -1,0 +1,9 @@
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+version: '3.8'
+services:
+  config-server:
+    image:  spring-cloud-netflix-example/config-server
+    links:
+      - "eureka-server"
+    volumes:
+      - ./config-server/config:/app/config
