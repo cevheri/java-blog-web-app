@@ -1,9 +1,11 @@
 package com.cevheri.blog.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -13,7 +15,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "post_comment")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class PostComment implements Serializable {
+public class PostComment extends AbstractAuditingEntity
+    implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +35,7 @@ public class PostComment implements Serializable {
     private String commentText;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "user", "blog", "tags" }, allowSetters = true)
+    @JsonIgnoreProperties(value = {"user", "blog", "tags"}, allowSetters = true)
     private Post post;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

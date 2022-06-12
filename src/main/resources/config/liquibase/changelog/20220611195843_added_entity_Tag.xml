@@ -42,4 +42,19 @@
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
+
+    <changeSet id="tag-02" author="cevheri">
+        <addColumn tableName="tag">
+            <column name="created_by" type="varchar(50)"/>
+        </addColumn>
+        <addColumn tableName="tag">
+            <column name="created_date" type="timestamp"/>
+        </addColumn>
+        <addColumn tableName="tag">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+        <addColumn tableName="tag">
+            <column name="last_modified_date" type="timestamp"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

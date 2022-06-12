@@ -1,11 +1,13 @@
 package com.cevheri.blog.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
@@ -16,7 +18,8 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name = "post")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Post implements Serializable {
+public class Post extends AbstractAuditingEntity
+    implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -58,13 +61,13 @@ public class Post implements Serializable {
     private User user;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
+    @JsonIgnoreProperties(value = {"user"}, allowSetters = true)
     private Blog blog;
 
     @ManyToMany
     @JoinTable(name = "rel_post__tag", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "posts" }, allowSetters = true)
+    @JsonIgnoreProperties(value = {"posts"}, allowSetters = true)
     private Set<Tag> tags = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

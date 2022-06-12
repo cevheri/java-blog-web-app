@@ -1,9 +1,11 @@
 package com.cevheri.blog.domain;
 
 import com.cevheri.blog.domain.enumeration.ThirdPartyAppName;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -13,7 +15,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "third_party_app")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class ThirdPartyApp implements Serializable {
+public class ThirdPartyApp extends AbstractAuditingEntity
+    implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
