@@ -1,6 +1,7 @@
 package com.cevheri.blog.service.impl;
 
 import com.cevheri.blog.domain.Post;
+import com.cevheri.blog.repository.PostLikeRepository;
 import com.cevheri.blog.repository.PostRepository;
 import com.cevheri.blog.repository.PostViewRepository;
 import com.cevheri.blog.service.PostService;
@@ -32,17 +33,20 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final PostViewRepository postViewRepository;
+    private final PostLikeRepository postLikeRepository;
     private final PostMapper postMapper;
     private final ThirdPartyBlogService thirdPartyBlogService;
     private final PostViewService postViewService;
 
     public PostServiceImpl(PostRepository postRepository,
                            PostViewRepository postViewRepository,
+                           PostLikeRepository postLikeRepository,
                            PostMapper postMapper,
                            ThirdPartyBlogService thirdPartyBlogService,
                            PostViewService postViewService) {
         this.postRepository = postRepository;
         this.postViewRepository = postViewRepository;
+        this.postLikeRepository = postLikeRepository;
         this.postMapper = postMapper;
         this.thirdPartyBlogService = thirdPartyBlogService;
         this.postViewService = postViewService;
@@ -69,7 +73,11 @@ public class PostServiceImpl implements PostService {
         log.debug("Request to save Post : {}", postDTO);
         Post post = postMapper.toEntity(postDTO);
         post = postRepository.save(post);
-        return postMapper.toDto(post);
+        var result = postMapper.toDto(post);
+        if (post.getIntegrationId() != null) {
+            thirdPartyBlogService.sendPost(result);
+        }
+        return result;
     }
 
     @Override
@@ -91,7 +99,10 @@ public class PostServiceImpl implements PostService {
     @Transactional(readOnly = true)
     public Page<PostDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Posts");
-        return postRepository.findAll(pageable).map(postMapper::toDto);
+        return postRepository
+            .findAll(pageable)
+            .map(postMapper::toDto)
+            ;
     }
 
     public Page<PostDTO> findAllWithEagerRelationships(Pageable pageable) {
@@ -101,7 +112,8 @@ public class PostServiceImpl implements PostService {
     @Override
     public Optional<PostDTO> findOne(Long id) {
         log.debug("Request to get Post : {}", id);
-        var result = postRepository.findOneWithEagerRelationships(id).map(postMapper::toDto);
+        var result = postRepository.findOneWithEagerRelationships(id)
+            .map(postMapper::toDto);
         result.ifPresentOrElse(t -> {
                 PostViewDTO postView = new PostViewDTO();
                 postView.setPost(t);
@@ -111,7 +123,9 @@ public class PostServiceImpl implements PostService {
                 throw new BadRequestAlertException("Entity not found", "post", "idnotfound");
             }
         );
-
+        PostDTO postDTO = result.get();
+        postDTO.setLikeCount(postLikeRepository.countByPost_Id(postDTO.getId()));
+        postDTO.setViewCount(postViewRepository.countByPost_Id(postDTO.getId()));
         return result;
     }
 

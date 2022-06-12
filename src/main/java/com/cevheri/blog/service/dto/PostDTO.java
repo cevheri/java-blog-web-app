@@ -53,6 +53,25 @@ public class PostDTO implements Serializable {
 
     private String integrationId;
 
+    private Integer likeCount;
+    private Integer viewCount;
+
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
+    }
+
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
+    }
+
     public String getIntegrationId() {
         return integrationId;
     }

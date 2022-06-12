@@ -5,7 +5,9 @@ import com.cevheri.blog.repository.PostCommentRepository;
 import com.cevheri.blog.service.PostCommentService;
 import com.cevheri.blog.service.dto.PostCommentDTO;
 import com.cevheri.blog.service.mapper.PostCommentMapper;
+
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -64,13 +66,26 @@ public class PostCommentServiceImpl implements PostCommentService {
 
     @Override
     @Transactional(readOnly = true)
+    public Page<PostCommentDTO> findAll(Long postId, Pageable pageable) {
+        log.debug("Request to get all PostComments");
+        return postCommentRepository.findAllByPost_Id(postId, pageable).map(postCommentMapper::toDto);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Page<PostCommentDTO> findAll(Pageable pageable) {
         log.debug("Request to get all PostComments");
         return postCommentRepository.findAll(pageable).map(postCommentMapper::toDto);
     }
 
+    @Override
+    public Page<PostCommentDTO> findAllWithEagerRelationships(Long postId, Pageable pageable) {
+        return postCommentRepository.findAllWithEagerRelationships(postId, pageable).map(postCommentMapper::toDto);
+    }
+
+    @Override
     public Page<PostCommentDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return postCommentRepository.findAllWithEagerRelationships(pageable).map(postCommentMapper::toDto);
+        return postCommentRepository.findAll(pageable).map(postCommentMapper::toDto);
     }
 
     @Override

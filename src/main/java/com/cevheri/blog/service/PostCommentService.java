@@ -39,6 +39,7 @@ public interface PostCommentService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
+    Page<PostCommentDTO> findAll(Long postId, Pageable pageable);
     Page<PostCommentDTO> findAll(Pageable pageable);
 
     /**
@@ -47,6 +48,8 @@ public interface PostCommentService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
+    Page<PostCommentDTO> findAllWithEagerRelationships(Long postId, Pageable pageable);
+
     Page<PostCommentDTO> findAllWithEagerRelationships(Pageable pageable);
 
     /**

@@ -52,18 +52,19 @@ public interface PostMapper extends EntityMapper<PostDTO, Post> {
         return tag.stream().map(this::toDtoTagName).collect(Collectors.toSet());
     }
 
-    default PostResponse toPostModel(PostDTO postDTO){
+    default PostResponse toPostModel(PostDTO postDTO) {
         PostResponse result = new PostResponse();
         PostResponse.PostData model = result.getData();
-        model.setId(null);
-        model.setAuthorId(null);
+        if (postDTO.getIntegrationId() != null) {
+            model.setId(postDTO.getIntegrationId());
+        }
         model.setTitle(postDTO.getTitle());
         model.setTags(postDTO.getTags().stream().map(TagDTO::getName).collect(Collectors.toList()));
         model.setCanonicalUrl("https://cevheri-blog.herokuapp.com");
         model.setContent(postDTO.getContent());
-        model.setLicense(null);
+        model.setLicense("all-rights-reserved");
         model.setContentFormat("html");
-        model.setPublishStatus(null);
+        model.setPublishStatus("public");
         result.setData(model);
         return result;
     }

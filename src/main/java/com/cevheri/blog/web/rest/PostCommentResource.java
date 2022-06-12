@@ -153,14 +153,37 @@ public class PostCommentResource {
         log.debug("REST request to get a page of PostComments");
         Page<PostCommentDTO> page;
         if (eagerload) {
-            page = postCommentService.findAllWithEagerRelationships(pageable);
+            page = postCommentService.findAllWithEagerRelationships(1L, pageable);
         } else {
-            page = postCommentService.findAll(pageable);
+            page = postCommentService.findAll(1L, pageable);
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
-
+    /**
+     * {@code GET  /post-comments/:postId } : get all the postComments By postId.
+     *
+     * @param postId the post ID information
+     * @param pageable the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of postComments in body.
+     */
+    @GetMapping("/post-comments/post/{postId}")
+    public ResponseEntity<List<PostCommentDTO>> getAllPostCommentsByPostId(
+        @PathVariable(value = "postId") Long postId,
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+    ) {
+        log.debug("REST request to get a page of PostComments");
+        Page<PostCommentDTO> page;
+        if (eagerload) {
+            page = postCommentService.findAllWithEagerRelationships(postId, pageable);
+        } else {
+            page = postCommentService.findAll(postId, pageable);
+        }
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
     /**
      * {@code GET  /post-comments/:id} : get the "id" postComment.
      *

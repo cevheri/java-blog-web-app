@@ -38,16 +38,13 @@ public class MediumServiceImpl
         PostResponse result = new PostResponse();
         try {
 
-            if(postDTO.getIntegrationId()!=null){
-                //TODO call medium updatePost api.
-            }
-
+//            if(postDTO.getIntegrationId()!=null){
+//                //TODO call medium updatePost api.
+//            }
             result = PostApi.createPost(postMapper.toPostModel(postDTO));
-
             if(!result.getErrors().isEmpty()){
                 //TODO PostCreateError. Medium response Error. Write a log!!!!
             }
-
             integrationLogDTO.setExitCode(ExitCodeType.SUCCESS);
             integrationLogDTO.setResponseData(result.toString());
         }catch (IOException ie){

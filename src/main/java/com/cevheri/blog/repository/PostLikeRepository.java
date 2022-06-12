@@ -37,4 +37,6 @@ public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
 
     @Query("select postLike from PostLike postLike left join fetch postLike.post where postLike.id =:id")
     Optional<PostLike> findOneWithToOneRelationships(@Param("id") Long id);
+
+    Integer countByPost_Id(Long id);
 }
