@@ -1,0 +1,38 @@
+# curl --location --request POST 'https://api.medium.com/v1/users/12974e025f39ae31b1e4c4a419f4f8210f1b399d20e39f24d5eeb3f1715d041e4/posts'
+#--header 'accept: application/json'
+#--header 'Authorization: Bearer 2418f8eabee116684110f01ec98631f35f7528a88c33312e9a339fb1e9de46ec9'
+#--header 'Content-Type: application/json'
+#--header 'Cookie: sid=1:aboHYaPMDZy7swhgN7pefrUZqNu06mEblRggnskEFSniUuc2455pGgCPQtzNqsS7; uid=lo_0368e234f2c3'
+#--data-raw '{
+#  "title": "Liverpool FC 3",
+#  "contentFormat": "html",
+#  "content": "<h1>Liverpool FC 3</h1><p>You’ll never walk alone.</p>",
+#  "canonicalUrl": "http://jamietalbot.com/posts/liverpool-fc",
+#  "tags": [
+#    "football",
+#    "sport",
+#    "Liverpool"
+#  ],
+#  "publishStatus": "public"
+#}'
+POST https://api.medium.com/v1/users/12974e025f39ae31b1e4c4a419f4f8210f1b399d20e39f24d5eeb3f1715d041e4/posts
+accept: application/json
+Authorization: Bearer 2418f8eabee116684110f01ec98631f35f7528a88c33312e9a339fb1e9de46ec9
+Cookie: sid=1:aboHYaPMDZy7swhgN7pefrUZqNu06mEblRggnskEFSniUuc2455pGgCPQtzNqsS7; uid=lo_0368e234f2c3
+Content-Type: application/json
+
+{
+  "title": "Liverpool FC 4",
+  "contentFormat": "html",
+  "content": "<h1>Liverpool FC 4</h1><p>You’ll never walk alone.</p>",
+  "canonicalUrl": "http://jamietalbot.com/posts/liverpool-fc",
+  "tags": [
+    "football",
+    "sport",
+    "Liverpool"
+  ],
+  "publishStatus": "public"
+}
+
+###
+
