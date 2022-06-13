@@ -1,10 +1,15 @@
 package com.cevheri.blog.web.rest;
 
+import com.cevheri.blog.domain.enumeration.UserLoginStatus;
+import com.cevheri.blog.repository.UserRepository;
+import com.cevheri.blog.security.SecurityUtils;
 import com.cevheri.blog.security.jwt.JWTFilter;
 import com.cevheri.blog.security.jwt.TokenProvider;
 import com.cevheri.blog.web.rest.vm.LoginVM;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.Valid;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +27,16 @@ import org.springframework.web.bind.annotation.*;
 public class UserJWTController {
 
     private final TokenProvider tokenProvider;
-
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final UserRepository userRepository;
 
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    public UserJWTController(TokenProvider tokenProvider,
+                             AuthenticationManagerBuilder authenticationManagerBuilder,
+                             UserRepository userRepository) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
+
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/authenticate")
@@ -42,7 +51,24 @@ public class UserJWTController {
         String jwt = tokenProvider.createToken(authentication, loginVM.isRememberMe());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        updateLoginStatus(UserLoginStatus.LOGIN);
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout() {
+        updateLoginStatus(UserLoginStatus.LOGOUT);
+        return new ResponseEntity<>("TokenExpired", HttpStatus.OK);
+    }
+
+    private void updateLoginStatus(UserLoginStatus status) {
+        SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneByLogin)
+            .ifPresent(user -> {
+                user.setLoginStatus(status);
+                userRepository.save(user);
+            });
     }
 
     /**

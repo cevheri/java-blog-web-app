@@ -118,4 +118,10 @@
             <column name="local_date" type="date"/>
         </createTable>
     </changeSet>
+
+    <changeSet id="user-logout" author="cevheri">
+        <addColumn tableName="jhi_user">
+            <column name="login_status" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

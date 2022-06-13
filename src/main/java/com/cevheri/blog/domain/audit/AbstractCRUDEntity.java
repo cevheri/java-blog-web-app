@@ -1,4 +1,4 @@
-package com.cevheri.blog.domain;
+package com.cevheri.blog.domain.audit;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
@@ -18,7 +18,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class AbstractAuditingEntity implements Serializable {
+public abstract class AbstractCRUDEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
