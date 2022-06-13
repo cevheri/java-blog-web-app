@@ -1,7 +1,8 @@
 package com.cevheri.blog.service.medium;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.testcontainers.shaded.okhttp3.*;
+import okhttp3.*;
+
 
 import java.io.IOException;
 
