@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import com.cevheri.blog.domain.audit.AbstractEntityAuditEvent;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -13,7 +14,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "blog")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Blog extends AbstractAuditingEntity
+public class Blog extends AbstractEntityAuditEvent
     implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -57,7 +57,6 @@ public class CacheConfiguration {
             createCache(cm, com.cevheri.blog.domain.PostView.class.getName());
             createCache(cm, com.cevheri.blog.domain.PostLike.class.getName());
             createCache(cm, com.cevheri.blog.domain.ThirdPartyApp.class.getName());
-            createCache(cm, com.cevheri.blog.domain.IntegrationLog.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

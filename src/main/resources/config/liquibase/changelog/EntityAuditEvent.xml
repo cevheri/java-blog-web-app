@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="entity_audit_event-00" author="jhipster">
+        <createSequence sequenceName="seq_entity_audit_event" startValue="1050" incrementBy="50"/>
+    </changeSet>
+
+    <!--
+        Added the entity EntityAuditEvent.
+    -->
+    <changeSet id="entity_audit_event-01" author="jhipster">
+        <createTable tableName="entity_audit_event">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="entity_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entity_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="entity_value" type="${clobType}"/>
+            <column name="commit_version" type="integer"/>
+            <column name="modified_by" type="varchar(100)"/>
+            <column name="modified_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex indexName="idx_entity_audit_event_entity_id"
+                     tableName="entity_audit_event">
+            <column name="entity_id" type="bigint"/>
+        </createIndex>
+        <createIndex indexName="idx_entity_audit_event_entity_type"
+                     tableName="entity_audit_event">
+            <column name="entity_type" type="varchar(255)"/>
+        </createIndex>
+        <dropDefaultValue tableName="entity_audit_event"
+                          columnName="modified_date"
+                          columnDataType="datetime"/>
+    </changeSet>
+
+</databaseChangeLog>

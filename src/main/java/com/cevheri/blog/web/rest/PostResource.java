@@ -2,6 +2,7 @@ package com.cevheri.blog.web.rest;
 
 import com.cevheri.blog.domain.Post;
 import com.cevheri.blog.repository.PostRepository;
+import com.cevheri.blog.security.AuthoritiesConstants;
 import com.cevheri.blog.security.SecurityUtils;
 import com.cevheri.blog.service.PostService;
 import com.cevheri.blog.service.dto.PostDTO;
@@ -195,18 +196,42 @@ public class PostResource {
     }
 
     /**
-     * {@code GET  /posts/:id} : get the "id" post.
+     * {@code GET  /posts/:id/view-count} : get the "id" post view-count.
      *
      * @param id the id of the postDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the postDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/posts/{id}/view-count")
     public ResponseEntity<Integer> getPostViewCount(@PathVariable Long id) {
-        log.debug("REST request to get Post : {}", id);
+        log.debug("REST request to get Post view-count: {}", id);
         Integer result = postService.viewCount(id);
         return ResponseEntity.ok(result);
     }
+    /**
+     * {@code GET  /posts/:id/like-count} : get the "id" post like-count.
+     *
+     * @param id the id of the postDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the postDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/posts/{id}/like-count")
+    public ResponseEntity<Integer> getPostLikeCount(@PathVariable Long id) {
+        log.debug("REST request to get Post like-count : {}", id);
+        Integer result = postService.likeCount(id);
+        return ResponseEntity.ok(result);
+    }
 
+    /**
+     * {@code GET  /posts/:id/comment-count} : get the "id" post comment-count.
+     *
+     * @param id the id of the postDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the postDTO, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/posts/{id}/comment-count")
+    public ResponseEntity<Integer> getPostCommentCount(@PathVariable Long id) {
+        log.debug("REST request to get Post like-count : {}", id);
+        Integer result = postService.commentCount(id);
+        return ResponseEntity.ok(result);
+    }
     /**
      * {@code DELETE  /posts/:id} : delete the "id" post.
      *

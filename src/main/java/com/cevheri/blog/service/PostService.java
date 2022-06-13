@@ -67,4 +67,8 @@ public interface PostService {
     void delete(Long id);
 
     Integer viewCount(Long id);
+
+    Integer likeCount(Long id);
+
+    Integer commentCount(Long id);
 }

@@ -1,5 +1,6 @@
 package com.cevheri.blog.domain;
 
+import com.cevheri.blog.domain.audit.AbstractEntityAuditEvent;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -17,7 +18,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "tag")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Tag extends AbstractAuditingEntity
+public class Tag extends AbstractEntityAuditEvent
     implements Serializable {
 
     private static final long serialVersionUID = 1L;

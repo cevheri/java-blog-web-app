@@ -41,4 +41,6 @@ public interface PostCommentRepository extends JpaRepository<PostComment, Long> 
     Optional<PostComment> findOneWithToOneRelationships(@Param("id") Long id);
 
     Page<PostComment> findAllByPost_Id(@Param("postId") Long postId, Pageable pageable);
+
+    Integer countByPost_Id(@Param("postId") Long postId);
 }

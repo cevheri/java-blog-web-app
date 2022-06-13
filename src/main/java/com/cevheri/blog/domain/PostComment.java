@@ -1,5 +1,6 @@
 package com.cevheri.blog.domain;
 
+import com.cevheri.blog.domain.audit.AbstractEntityAuditEvent;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "post_comment")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class PostComment extends AbstractAuditingEntity
+public class PostComment extends AbstractEntityAuditEvent
     implements Serializable {
 
     private static final long serialVersionUID = 1L;

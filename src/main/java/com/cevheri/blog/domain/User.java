@@ -1,6 +1,7 @@
 package com.cevheri.blog.domain;
 
 import com.cevheri.blog.config.Constants;
+import com.cevheri.blog.domain.audit.AbstractEntityAuditEvent;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.Instant;
@@ -23,7 +24,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "jhi_user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class User extends AbstractAuditingEntity implements Serializable {
+public class User
+    extends AbstractEntityAuditEvent implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
