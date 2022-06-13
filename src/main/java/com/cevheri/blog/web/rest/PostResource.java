@@ -100,11 +100,6 @@ public class PostResource {
         if (!Objects.equals(id, updatePostDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
-
-//        if (!postRepository.existsById(id)) {
-//            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-//        }
-
         var postDTO = postService.findOne(id);
         if (postDTO.isEmpty()) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
@@ -116,7 +111,6 @@ public class PostResource {
         }
 
         convertToPostDto(updatePostDTO, postDTO);
-
         PostDTO result = postService.update(postDTO.get());
         return ResponseEntity
             .ok()

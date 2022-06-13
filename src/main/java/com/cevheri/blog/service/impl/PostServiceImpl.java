@@ -13,6 +13,7 @@ import com.cevheri.blog.service.ThirdPartyBlogService;
 import com.cevheri.blog.service.dto.PostDTO;
 import com.cevheri.blog.service.dto.PostViewDTO;
 import com.cevheri.blog.service.dto.UpdatePostDTO;
+import com.cevheri.blog.service.error.PremiumMemberShipOnlyException;
 import com.cevheri.blog.service.mapper.PostMapper;
 
 import java.util.Optional;
@@ -142,7 +143,7 @@ public class PostServiceImpl implements PostService {
     private void checkPremiumMembership(PostDTO t) {
         if (t.getPaidMemberOnly()) {
             if (!SecurityUtils.hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.PREMIUM)) {
-                throw new RuntimeException("Premium membership only!");
+                throw new PremiumMemberShipOnlyException("Premium membership only!", "post","premiumMembershipOnly");
             }
         }
     }
