@@ -25,7 +25,7 @@ public interface PostService {
      * @param postDTO the entity to update.
      * @return the persisted entity.
      */
-    PostDTO update(UpdatePostDTO postDTO);
+    PostDTO update(PostDTO postDTO);
 
     /**
      * Partially updates a post.

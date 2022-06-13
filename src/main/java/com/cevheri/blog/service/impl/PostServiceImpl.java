@@ -16,8 +16,6 @@ import com.cevheri.blog.service.dto.UpdatePostDTO;
 import com.cevheri.blog.service.mapper.PostMapper;
 
 import java.util.Optional;
-
-import com.cevheri.blog.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -75,7 +73,7 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public PostDTO update(UpdatePostDTO postDTO) {
+    public PostDTO update(PostDTO postDTO) {
         log.debug("Request to save Post : {}", postDTO);
         Post post = postMapper.toEntity(postDTO);
         post = postRepository.save(post);
@@ -126,7 +124,7 @@ public class PostServiceImpl implements PostService {
                 addPostViews(t);
             },
             () -> {
-                throw new BadRequestAlertException("Entity not found", "post", "idnotfound");
+                throw new RuntimeException("Entity not found");
             }
         );
         PostDTO postDTO = result.get();
@@ -144,7 +142,7 @@ public class PostServiceImpl implements PostService {
     private void checkPremiumMembership(PostDTO t) {
         if (t.getPaidMemberOnly()) {
             if (!SecurityUtils.hasCurrentUserAnyOfAuthorities(AuthoritiesConstants.PREMIUM)) {
-                throw new BadRequestAlertException("Premium membership only!", "post", "premium_membership_only");
+                throw new RuntimeException("Premium membership only!");
             }
         }
     }

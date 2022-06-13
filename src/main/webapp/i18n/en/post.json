@@ -25,11 +25,13 @@
       "user": "User",
       "blog": "Blog",
       "tag": "Tag",
+      "integrationId": "Third party integration ID",
       "help": {
         "title": "Post title information",
         "content": "Post content information",
         "paidMemberOnly": "Paid Membership",
-        "publishThirdPartyApp": "Publish third party app. for example Medium."
+        "publishThirdPartyApp": "Publish third party app. for example Medium.",
+        "integrationId": "Third party integration ID"
       }
     }
   }

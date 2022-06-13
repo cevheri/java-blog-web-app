@@ -102,64 +102,7 @@ public class PostCommentResource {
             .body(result);
     }
 
-    /**
-     * {@code PATCH  /post-comments/:id} : Partial updates given fields of an existing postComment, field will ignore if it is null
-     *
-     * @param id the id of the postCommentDTO to save.
-     * @param postCommentDTO the postCommentDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated postCommentDTO,
-     * or with status {@code 400 (Bad Request)} if the postCommentDTO is not valid,
-     * or with status {@code 404 (Not Found)} if the postCommentDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the postCommentDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PatchMapping(value = "/post-comments/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<PostCommentDTO> partialUpdatePostComment(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody PostCommentDTO postCommentDTO
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update PostComment partially : {}, {}", id, postCommentDTO);
-        if (postCommentDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, postCommentDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
 
-        if (!postCommentRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<PostCommentDTO> result = postCommentService.partialUpdate(postCommentDTO);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, postCommentDTO.getId().toString())
-        );
-    }
-
-    /**
-     * {@code GET  /post-comments} : get all the postComments.
-     *
-     * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of postComments in body.
-     */
-    @GetMapping("/post-comments")
-    public ResponseEntity<List<PostCommentDTO>> getAllPostComments(
-        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        @RequestParam(required = false, defaultValue = "false") boolean eagerload
-    ) {
-        log.debug("REST request to get a page of PostComments");
-        Page<PostCommentDTO> page;
-        if (eagerload) {
-            page = postCommentService.findAllWithEagerRelationships(1L, pageable);
-        } else {
-            page = postCommentService.findAll(1L, pageable);
-        }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
     /**
      * {@code GET  /post-comments/:postId } : get all the postComments By postId.
      *

@@ -136,6 +136,18 @@
         </div>
       </div>
 
+      <div class="row mb-3">
+        <label
+          class="form-label"
+          jhiTranslate="blogApp.post.integrationId"
+          for="field_integrationId"
+          [ngbTooltip]="'blogApp.post.help.integrationId' | translate">integrationId
+        </label>
+        <input type="text" class="form-control" name="title" id="field_integrationId" data-cy="integrationId" formControlName="integrationId" />
+      </div>
+
+
+
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>

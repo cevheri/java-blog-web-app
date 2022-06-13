@@ -1,5 +1,6 @@
 package com.cevheri.blog.domain;
 
+import com.cevheri.blog.domain.audit.AbstractCRUDEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -14,7 +15,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "post_view")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class PostView extends AbstractAuditingEntity
+public class PostView extends AbstractCRUDEntity
     implements Serializable {
 
     private static final long serialVersionUID = 1L;

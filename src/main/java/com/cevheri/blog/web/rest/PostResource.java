@@ -115,12 +115,21 @@ public class PostResource {
             return new ResponseEntity<>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
 
+        convertToPostDto(updatePostDTO, postDTO);
 
-        PostDTO result = postService.update(updatePostDTO);
+        PostDTO result = postService.update(postDTO.get());
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, updatePostDTO.getId().toString()))
             .body(result);
+    }
+
+    private void convertToPostDto(UpdatePostDTO updatePostDTO, Optional<PostDTO> postDTO) {
+        postDTO.get().setContent(updatePostDTO.getContent());
+        postDTO.get().setTitle(updatePostDTO.getTitle());
+        postDTO.get().setPaidMemberOnly(updatePostDTO.getPaidMemberOnly());
+        postDTO.get().setPublishThirdPartyApp(updatePostDTO.getPublishThirdPartyApp());
+        postDTO.get().setTags(updatePostDTO.getTags());
     }
 
     /**

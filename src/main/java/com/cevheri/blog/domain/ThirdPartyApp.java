@@ -1,5 +1,6 @@
 package com.cevheri.blog.domain;
 
+import com.cevheri.blog.domain.audit.AbstractCRUDEntity;
 import com.cevheri.blog.domain.enumeration.ThirdPartyAppName;
 
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "third_party_app")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class ThirdPartyApp extends AbstractAuditingEntity
+public class ThirdPartyApp extends AbstractCRUDEntity
     implements Serializable {
 
     private static final long serialVersionUID = 1L;

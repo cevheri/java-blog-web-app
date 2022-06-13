@@ -11,6 +11,7 @@ export interface IPost {
   user?: IUser | null;
   blog?: IBlog | null;
   tags?: ITag[] | null;
+  integrationId?: string;
 }
 
 export class Post implements IPost {
@@ -22,7 +23,8 @@ export class Post implements IPost {
     public publishThirdPartyApp?: boolean | null,
     public user?: IUser | null,
     public blog?: IBlog | null,
-    public tags?: ITag[] | null
+    public tags?: ITag[] | null,
+    public integrationId?: string
   ) {
     this.paidMemberOnly = this.paidMemberOnly ?? false;
     this.publishThirdPartyApp = this.publishThirdPartyApp ?? false;

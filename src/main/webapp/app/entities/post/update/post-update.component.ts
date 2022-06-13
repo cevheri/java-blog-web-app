@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
+import {FormBuilder, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs';
+import {finalize, map} from 'rxjs/operators';
 
-import { IPost, Post } from '../post.model';
-import { PostService } from '../service/post.service';
-import { AlertError } from 'app/shared/alert/alert-error.model';
-import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
-import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/user.service';
-import { IBlog } from 'app/entities/blog/blog.model';
-import { BlogService } from 'app/entities/blog/service/blog.service';
-import { ITag } from 'app/entities/tag/tag.model';
-import { TagService } from 'app/entities/tag/service/tag.service';
+import {IPost, Post} from '../post.model';
+import {PostService} from '../service/post.service';
+import {AlertError} from 'app/shared/alert/alert-error.model';
+import {EventManager, EventWithContent} from 'app/core/util/event-manager.service';
+import {DataUtils, FileLoadError} from 'app/core/util/data-util.service';
+import {IUser} from 'app/entities/user/user.model';
+import {UserService} from 'app/entities/user/user.service';
+import {IBlog} from 'app/entities/blog/blog.model';
+import {BlogService} from 'app/entities/blog/service/blog.service';
+import {ITag} from 'app/entities/tag/tag.model';
+import {TagService} from 'app/entities/tag/service/tag.service';
 
 @Component({
   selector: 'jhi-post-update',
@@ -37,6 +37,7 @@ export class PostUpdateComponent implements OnInit {
     user: [],
     blog: [],
     tags: [],
+    integrationId: []
   });
 
   constructor(
@@ -48,10 +49,11 @@ export class PostUpdateComponent implements OnInit {
     protected tagService: TagService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ post }) => {
+    this.activatedRoute.data.subscribe(({post}) => {
       this.updateForm(post);
 
       this.loadRelationshipsOptions();
@@ -69,7 +71,10 @@ export class PostUpdateComponent implements OnInit {
   setFileData(event: Event, field: string, isImage: boolean): void {
     this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe({
       error: (err: FileLoadError) =>
-        this.eventManager.broadcast(new EventWithContent<AlertError>('blogApp.error', { ...err, key: 'error.file.' + err.key })),
+        this.eventManager.broadcast(new EventWithContent<AlertError>('blogApp.error', {
+          ...err,
+          key: 'error.file.' + err.key
+        })),
     });
   }
 
@@ -139,6 +144,7 @@ export class PostUpdateComponent implements OnInit {
       user: post.user,
       blog: post.blog,
       tags: post.tags,
+      integrationId: post.integrationId
     });
 
     this.usersSharedCollection = this.userService.addUserToCollectionIfMissing(this.usersSharedCollection, post.user);
@@ -177,6 +183,7 @@ export class PostUpdateComponent implements OnInit {
       user: this.editForm.get(['user'])!.value,
       blog: this.editForm.get(['blog'])!.value,
       tags: this.editForm.get(['tags'])!.value,
+      integrationId: this.editForm.get(['integrationId'])!.value,
     };
   }
 }
