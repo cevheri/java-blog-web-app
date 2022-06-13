@@ -5,11 +5,10 @@
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
 <!-- The FILE and ASYNC appenders are here as examples for a production configuration -->
-<!--
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>90</maxHistory>
+            <maxHistory>15</maxHistory>
         </rollingPolicy>
         <encoder>
             <charset>utf-8</charset>
@@ -25,7 +24,6 @@
     <root level="${logging.level.root}">
         <appender-ref ref="ASYNC"/>
     </root>
--->
 
     <logger name="javax.activation" level="WARN"/>
     <logger name="javax.mail" level="WARN"/>
@@ -68,5 +66,46 @@
     <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
         <resetJUL>true</resetJUL>
     </contextListener>
+
+<!--    &lt;!&ndash;Cevheri : Postgresql LogBack Appander    &ndash;&gt;-->
+    <appender name="POSTGRES" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <driverClass>com.zaxxer.hikari.HikariDataSource</driverClass>
+            <url>jdbc:postgresql://ec2-54-228-32-29.eu-west-1.compute.amazonaws.com:5432/d3u9gjp7sid0q6</url>
+            <user>nlkshkvuuobqke</user>
+            <password>837dd58cd40354dccde06e066dc8aa20788d5b04659e8fb9adf9493af2e7c5f9</password>
+        </connectionSource>
+    </appender>
+    <root level="ERROR">
+        <appender-ref ref="POSTGRES"/>
+    </root>
+    <!--end postgres    -->
+
+
+    <!--email    -->
+
+    <appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
+        <smtpHost>smtp.gmail.com</smtpHost>
+        <smtpPort>587</smtpPort>
+        <STARTTLS>true</STARTTLS>
+<!--        <username>hrbudget.dev@gmail.com</username>-->
+<!--        <password>vncnpmoscajsmmow</password>        -->
+        <username>cevheribozoglan@gmail.com</username>
+        <password>vfztdeyooyssiezs</password>
+
+        <to>cevheribozoglan@gmail.com</to>
+        <from>cevheribozoglan@gmail.com</from>
+        <subject>blog Java Error: %logger{20} - %m</subject>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date %-5level %logger - %message%n</pattern>
+        </layout>
+    </appender>
+
+<!--    <root level="ERROR">-->
+<!--        <appender-ref ref="EMAIL" />-->
+<!--    </root>-->
+
+    <!--end email-->
+
 
 </configuration>

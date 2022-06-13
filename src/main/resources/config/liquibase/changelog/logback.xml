@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!-- logback loglarını tabloya kayıt yapabilmek için oluşturulmuştur.   -->
+    <changeSet id="logback-01" author="cevheri" dbms="postgresql">
+       <sql>
+           CREATE SEQUENCE logging_event_id_seq MINVALUE 1 START 1;
+       </sql>
+    </changeSet>
+
+    <changeSet id="logback-02" author="cevheri" dbms="postgresql">
+       <sql>
+           CREATE TABLE logging_event
+           (
+               timestmp         BIGINT NOT NULL,
+               formatted_message  TEXT NOT NULL,
+               logger_name       VARCHAR(254) NOT NULL,
+               level_string      VARCHAR(254) NOT NULL,
+               thread_name       VARCHAR(254),
+               reference_flag    SMALLINT,
+               arg0              VARCHAR(254),
+               arg1              VARCHAR(254),
+               arg2              VARCHAR(254),
+               arg3              VARCHAR(254),
+               caller_filename   VARCHAR(254) NOT NULL,
+               caller_class      VARCHAR(254) NOT NULL,
+               caller_method     VARCHAR(254) NOT NULL,
+               caller_line       CHAR(4) NOT NULL,
+               event_id          BIGINT DEFAULT nextval('logging_event_id_seq') PRIMARY KEY
+           );
+       </sql>
+    </changeSet>
+
+    <changeSet id="logback-03" author="cevheri" dbms="postgresql">
+        <sql>
+            CREATE TABLE logging_event_property
+            (
+                event_id	      BIGINT NOT NULL,
+                mapped_key        VARCHAR(254) NOT NULL,
+                mapped_value      VARCHAR(1024),
+                PRIMARY KEY(event_id, mapped_key),
+                FOREIGN KEY (event_id) REFERENCES logging_event(event_id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="logback-04" author="cevheri" dbms="postgresql">
+        <sql>
+            CREATE TABLE logging_event_exception
+            (
+                event_id         BIGINT NOT NULL,
+                i                SMALLINT NOT NULL,
+                trace_line       VARCHAR(254) NOT NULL,
+                PRIMARY KEY(event_id, i),
+                FOREIGN KEY (event_id) REFERENCES logging_event(event_id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="logback-h2-01" author="cevheri" dbms="h2">
+        <sql>
+            CREATE TABLE logging_event (
+                                           timestmp BIGINT NOT NULL,
+                                           formatted_message LONGVARCHAR NOT NULL,
+                                           logger_name VARCHAR(256) NOT NULL,
+                                           level_string VARCHAR(256) NOT NULL,
+                                           thread_name VARCHAR(256),
+                                           reference_flag SMALLINT,
+                                           arg0 VARCHAR(256),
+                                           arg1 VARCHAR(256),
+                                           arg2 VARCHAR(256),
+                                           arg3 VARCHAR(256),
+                                           caller_filename VARCHAR(256),
+                                           caller_class VARCHAR(256),
+                                           caller_method VARCHAR(256),
+                                           caller_line CHAR(4),
+                                           event_id IDENTITY NOT NULL);
+
+
+            CREATE TABLE logging_event_property (
+                                                    event_id BIGINT NOT NULL,
+                                                    mapped_key  VARCHAR(254) NOT NULL,
+                                                    mapped_value LONGVARCHAR,
+                                                    PRIMARY KEY(event_id, mapped_key),
+                                                    FOREIGN KEY (event_id) REFERENCES logging_event(event_id));
+
+            CREATE TABLE logging_event_exception (
+                                                     event_id BIGINT NOT NULL,
+                                                     i SMALLINT NOT NULL,
+                                                     trace_line VARCHAR(256) NOT NULL,
+                                                     PRIMARY KEY(event_id, i),
+                                                     FOREIGN KEY (event_id) REFERENCES logging_event(event_id));
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

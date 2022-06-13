@@ -156,7 +156,17 @@ spring:
   output:
     ansi:
       console-available: true
-
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: cevheribozoglan@gmail.com
+    password: vfztdeyooyssiezs
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 server:
   servlet:
     session:
