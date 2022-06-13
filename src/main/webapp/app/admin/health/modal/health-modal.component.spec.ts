@@ -31,7 +31,7 @@ describe('HealthModalComponent', () => {
       comp.health = undefined;
 
       // WHEN
-      const result = comp.readableValue({ name: 'jhipster' });
+      const result = comp.readableValue({ name: 'blogger' });
 
       // THEN
       expect(result).toEqual('{"name":"blogger"}');
@@ -42,10 +42,10 @@ describe('HealthModalComponent', () => {
       comp.health = undefined;
 
       // WHEN
-      const result = comp.readableValue('jhipster');
+      const result = comp.readableValue('blogger');
 
       // THEN
-      expect(result).toEqual('jhipster');
+      expect(result).toEqual('blogger');
     });
 
     it('should return storage space in an human readable unit (GB)', () => {
