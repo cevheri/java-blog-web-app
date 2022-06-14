@@ -18,7 +18,8 @@
 - `.github/workflows/main.yml` - GitHub Action file
 - `pom.xml` - Dependency Configuration File
 - `/src/main/docker` - Docker configurations for the application and services that the application depends on
-
+- API-DOCS https://cevheri-blog.herokuapp.com/admin/docs
+- default user/pass: admin/Admin.2022!
 ## Development
 
 Before you can build this project, you must install and configure the following dependencies on your machine:
