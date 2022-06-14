@@ -1,1 +1,1665 @@
-{"openapi":"3.0.1","info":{"title":"Blog API","description":"Blog API documentation","termsOfService":"","contact":{"name":"","url":"","email":""},"license":{"name":"unlicensed","url":""},"version":"0.0.1"},"servers":[{"url":"https://cevheri-blog.herokuapp.com","description":"Generated server url"}],"paths":{"/api/third-party-apps/{id}":{"get":{"tags":["third-party-app-resource"],"operationId":"getThirdPartyApp","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/ThirdPartyAppDTO"}}}}}},"put":{"tags":["third-party-app-resource"],"operationId":"updateThirdPartyApp","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ThirdPartyAppDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/ThirdPartyAppDTO"}}}}}},"delete":{"tags":["third-party-app-resource"],"operationId":"deleteThirdPartyApp","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK"}}}},"/api/posts/{id}":{"get":{"tags":["post-resource"],"operationId":"getPost","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"object"}}}}}},"put":{"tags":["post-resource"],"operationId":"updatePost","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/UpdatePostDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"object"}}}}}},"delete":{"tags":["post-resource"],"operationId":"deletePost","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"object"}}}}}},"patch":{"tags":["post-resource"],"operationId":"partialUpdatePost","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/PostDTO"}},"application/merge-patch+json":{"schema":{"$ref":"#/components/schemas/PostDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/PostDTO"}}}}}}},"/api/post-comments/{id}":{"get":{"tags":["post-comment-resource"],"operationId":"getPostComment","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/PostCommentDTO"}}}}}},"put":{"tags":["post-comment-resource"],"operationId":"updatePostComment","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/PostCommentDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/PostCommentDTO"}}}}}},"delete":{"tags":["post-comment-resource"],"operationId":"deletePostComment","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK"}}}},"/api/blogs/{id}":{"get":{"tags":["blog-resource"],"operationId":"getBlog","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"object"}}}}}},"put":{"tags":["blog-resource"],"operationId":"updateBlog","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/BlogDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"object"}}}}}},"delete":{"tags":["blog-resource"],"operationId":"deleteBlog","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"object"}}}}}},"patch":{"tags":["blog-resource"],"operationId":"partialUpdateBlog","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/BlogDTO"}},"application/merge-patch+json":{"schema":{"$ref":"#/components/schemas/BlogDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/BlogDTO"}}}}}}},"/api/admin/users":{"get":{"tags":["user-resource"],"operationId":"getAllUsers","parameters":[{"name":"page","in":"query","description":"Zero-based page index (0..N)","required":false,"schema":{"minimum":0,"type":"integer","default":0}},{"name":"size","in":"query","description":"The size of the page to be returned","required":false,"schema":{"minimum":1,"type":"integer","default":20}},{"name":"sort","in":"query","description":"Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.","required":false,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/AdminUserDTO"}}}}}}},"put":{"tags":["user-resource"],"operationId":"updateUser","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/AdminUserDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/AdminUserDTO"}}}}}},"post":{"tags":["user-resource"],"operationId":"createUser","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/AdminUserDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/User"}}}}}}},"/api/third-party-apps":{"get":{"tags":["third-party-app-resource"],"operationId":"getAllThirdPartyApps","parameters":[{"name":"page","in":"query","description":"Zero-based page index (0..N)","required":false,"schema":{"minimum":0,"type":"integer","default":0}},{"name":"size","in":"query","description":"The size of the page to be returned","required":false,"schema":{"minimum":1,"type":"integer","default":20}},{"name":"sort","in":"query","description":"Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.","required":false,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ThirdPartyAppDTO"}}}}}}},"post":{"tags":["third-party-app-resource"],"operationId":"createThirdPartyApp","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ThirdPartyAppDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/ThirdPartyAppDTO"}}}}}}},"/api/tags":{"get":{"tags":["tag-resource"],"operationId":"getAllTags","parameters":[{"name":"page","in":"query","description":"Zero-based page index (0..N)","required":false,"schema":{"minimum":0,"type":"integer","default":0}},{"name":"size","in":"query","description":"The size of the page to be returned","required":false,"schema":{"minimum":1,"type":"integer","default":20}},{"name":"sort","in":"query","description":"Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.","required":false,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/TagDTO"}}}}}}},"post":{"tags":["tag-resource"],"operationId":"createTag","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/TagDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/TagDTO"}}}}}}},"/api/register":{"post":{"tags":["account-resource"],"operationId":"registerAccount","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ManagedUserVM"}}},"required":true},"responses":{"201":{"description":"Created"}}}},"/api/posts":{"get":{"tags":["post-resource"],"operationId":"getAllPosts","parameters":[{"name":"page","in":"query","description":"Zero-based page index (0..N)","required":false,"schema":{"minimum":0,"type":"integer","default":0}},{"name":"size","in":"query","description":"The size of the page to be returned","required":false,"schema":{"minimum":1,"type":"integer","default":20}},{"name":"sort","in":"query","description":"Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.","required":false,"schema":{"type":"array","items":{"type":"string"}}},{"name":"eagerload","in":"query","required":false,"schema":{"type":"boolean","default":false}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/PostDTO"}}}}}}},"post":{"tags":["post-resource"],"operationId":"createPost","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/PostDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"object"}}}}}}},"/api/post-views":{"get":{"tags":["post-view-resource"],"operationId":"getAllPostViews","parameters":[{"name":"page","in":"query","description":"Zero-based page index (0..N)","required":false,"schema":{"minimum":0,"type":"integer","default":0}},{"name":"size","in":"query","description":"The size of the page to be returned","required":false,"schema":{"minimum":1,"type":"integer","default":20}},{"name":"sort","in":"query","description":"Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.","required":false,"schema":{"type":"array","items":{"type":"string"}}},{"name":"eagerload","in":"query","required":false,"schema":{"type":"boolean","default":false}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/PostViewDTO"}}}}}}},"post":{"tags":["post-view-resource"],"operationId":"createPostView","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/PostViewDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/PostViewDTO"}}}}}}},"/api/post-likes":{"get":{"tags":["post-like-resource"],"operationId":"getAllPostLikes","parameters":[{"name":"page","in":"query","description":"Zero-based page index (0..N)","required":false,"schema":{"minimum":0,"type":"integer","default":0}},{"name":"size","in":"query","description":"The size of the page to be returned","required":false,"schema":{"minimum":1,"type":"integer","default":20}},{"name":"sort","in":"query","description":"Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.","required":false,"schema":{"type":"array","items":{"type":"string"}}},{"name":"eagerload","in":"query","required":false,"schema":{"type":"boolean","default":false}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/PostLikeDTO"}}}}}}},"post":{"tags":["post-like-resource"],"operationId":"createPostLike","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/PostLikeDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/PostLikeDTO"}}}}}}},"/api/post-comments":{"post":{"tags":["post-comment-resource"],"operationId":"createPostComment","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/PostCommentDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/PostCommentDTO"}}}}}}},"/api/logout":{"post":{"tags":["user-jwt-controller"],"operationId":"logout","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"string"}}}}}}},"/api/integration-logs":{"get":{"tags":["integration-log-resource"],"operationId":"getAllIntegrationLogs","parameters":[{"name":"page","in":"query","description":"Zero-based page index (0..N)","required":false,"schema":{"minimum":0,"type":"integer","default":0}},{"name":"size","in":"query","description":"The size of the page to be returned","required":false,"schema":{"minimum":1,"type":"integer","default":20}},{"name":"sort","in":"query","description":"Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.","required":false,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/IntegrationLogDTO"}}}}}}},"post":{"tags":["integration-log-resource"],"operationId":"createIntegrationLog","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/IntegrationLogDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/IntegrationLogDTO"}}}}}}},"/api/blogs":{"get":{"tags":["blog-resource"],"operationId":"getAllBlogs","parameters":[{"name":"page","in":"query","description":"Zero-based page index (0..N)","required":false,"schema":{"minimum":0,"type":"integer","default":0}},{"name":"size","in":"query","description":"The size of the page to be returned","required":false,"schema":{"minimum":1,"type":"integer","default":20}},{"name":"sort","in":"query","description":"Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.","required":false,"schema":{"type":"array","items":{"type":"string"}}},{"name":"eagerload","in":"query","required":false,"schema":{"type":"boolean","default":false}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/BlogDTO"}}}}}}},"post":{"tags":["blog-resource"],"operationId":"createBlog","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/BlogDTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"object"}}}}}}},"/api/authenticate":{"get":{"tags":["account-resource"],"operationId":"isAuthenticated","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"string"}}}}}},"post":{"tags":["user-jwt-controller"],"operationId":"authorize","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/LoginVM"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/JWTToken"}}}}}}},"/api/account":{"get":{"tags":["account-resource"],"operationId":"getAccount","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/AdminUserDTO"}}}}}},"post":{"tags":["account-resource"],"operationId":"saveAccount","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/AdminUserDTO"}}},"required":true},"responses":{"200":{"description":"OK"}}}},"/api/account/reset-password/init":{"post":{"tags":["account-resource"],"operationId":"requestPasswordReset","requestBody":{"content":{"application/json":{"schema":{"type":"string"}}},"required":true},"responses":{"200":{"description":"OK"}}}},"/api/account/reset-password/finish":{"post":{"tags":["account-resource"],"operationId":"finishPasswordReset","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/KeyAndPasswordVM"}}},"required":true},"responses":{"200":{"description":"OK"}}}},"/api/account/change-password":{"post":{"tags":["account-resource"],"operationId":"changePassword","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/PasswordChangeDTO"}}},"required":true},"responses":{"200":{"description":"OK"}}}},"/api/users":{"get":{"tags":["public-user-resource"],"operationId":"getAllPublicUsers","parameters":[{"name":"page","in":"query","description":"Zero-based page index (0..N)","required":false,"schema":{"minimum":0,"type":"integer","default":0}},{"name":"size","in":"query","description":"The size of the page to be returned","required":false,"schema":{"minimum":1,"type":"integer","default":20}},{"name":"sort","in":"query","description":"Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.","required":false,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/UserDTO"}}}}}}}},"/api/tags/{id}":{"get":{"tags":["tag-resource"],"operationId":"getTag","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/TagDTO"}}}}}},"delete":{"tags":["tag-resource"],"operationId":"deleteTag","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK"}}}},"/api/posts/{id}/view-count":{"get":{"tags":["post-resource"],"operationId":"getPostViewCount","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"integer","format":"int32"}}}}}}},"/api/posts/{id}/like-count":{"get":{"tags":["post-resource"],"operationId":"getPostLikeCount","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"integer","format":"int32"}}}}}}},"/api/posts/{id}/comment-count":{"get":{"tags":["post-resource"],"operationId":"getPostCommentCount","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"integer","format":"int32"}}}}}}},"/api/post-views/{id}":{"get":{"tags":["post-view-resource"],"operationId":"getPostView","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/PostViewDTO"}}}}}},"delete":{"tags":["post-view-resource"],"operationId":"deletePostView","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK"}}}},"/api/post-likes/{id}":{"get":{"tags":["post-like-resource"],"operationId":"getPostLike","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/PostLikeDTO"}}}}}},"delete":{"tags":["post-like-resource"],"operationId":"deletePostLike","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK"}}}},"/api/post-comments/post/{postId}":{"get":{"tags":["post-comment-resource"],"operationId":"getAllPostCommentsByPostId","parameters":[{"name":"postId","in":"path","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"page","in":"query","description":"Zero-based page index (0..N)","required":false,"schema":{"minimum":0,"type":"integer","default":0}},{"name":"size","in":"query","description":"The size of the page to be returned","required":false,"schema":{"minimum":1,"type":"integer","default":20}},{"name":"sort","in":"query","description":"Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.","required":false,"schema":{"type":"array","items":{"type":"string"}}},{"name":"eagerload","in":"query","required":false,"schema":{"type":"boolean","default":false}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/PostCommentDTO"}}}}}}}},"/api/integration-logs/{id}":{"get":{"tags":["integration-log-resource"],"operationId":"getIntegrationLog","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/IntegrationLogDTO"}}}}}}},"/api/authorities":{"get":{"tags":["public-user-resource"],"operationId":"getAuthorities","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"type":"string"}}}}}}}},"/api/admin/users/{login}":{"get":{"tags":["user-resource"],"operationId":"getUser","parameters":[{"name":"login","in":"path","required":true,"schema":{"pattern":"^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$","type":"string"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/AdminUserDTO"}}}}}},"delete":{"tags":["user-resource"],"operationId":"deleteUser","parameters":[{"name":"login","in":"path","required":true,"schema":{"pattern":"^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$","type":"string"}}],"responses":{"200":{"description":"OK"}}}},"/api/activate":{"get":{"tags":["account-resource"],"operationId":"activateAccount","parameters":[{"name":"key","in":"query","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK"}}}}},"components":{"schemas":{"ThirdPartyAppDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"type":"string","description":"App Name : MEDIUM etc.","enum":["MEDIUM"]},"baseUrl":{"maxLength":1000,"minLength":0,"type":"string","description":"app base url : https:"},"accessKey":{"maxLength":1000,"minLength":0,"type":"string","description":"app access key :2418f8eabee116684110f01ec98631f35f7528a88c33312e9a339fb1e9de46ec9"},"authorId":{"maxLength":1000,"minLength":0,"type":"string","description":"app access key :2418f8eabee116684110f01ec98631f35f7528a88c33312e9a339fb1e9de46ec9"},"creatingPostApi":{"maxLength":1000,"minLength":0,"type":"string","description":"create post api endpoint - POST /users/{{authorId}}/posts"},"readPostApi":{"maxLength":1000,"minLength":0,"type":"string","description":"Listing the user’s publications api endpoint - GET  /users/{{userId}}/publications"},"active":{"type":"boolean","description":"Integration active or passive information"}},"description":"Third party integration configuration. BaseURL, accessKey etc."},"TagDTO":{"required":["name"],"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"maxLength":50,"minLength":2,"type":"string","description":"Tag information"}},"description":"Tag information, System users only! Tag Bilgisi (opsiyonel ve birden fazla) bulunması gerekmektedir."},"UpdatePostDTO":{"required":["content","title"],"type":"object","properties":{"id":{"type":"integer","format":"int64"},"title":{"maxLength":250,"minLength":3,"type":"string","description":"Post title information"},"content":{"type":"string","description":"Post content information"},"paidMemberOnly":{"type":"boolean","description":"Paid Membership"},"publishThirdPartyApp":{"type":"boolean","description":"Publish third party app. for example Medium."},"tags":{"uniqueItems":true,"type":"array","items":{"$ref":"#/components/schemas/TagDTO"}}},"description":"Post page information. System users only!"},"BlogDTO":{"required":["name"],"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"maxLength":250,"minLength":3,"type":"string","description":"Blog name information"},"user":{"$ref":"#/components/schemas/UserDTO"}},"description":"Blog page for users post. System users only!"},"PostCommentDTO":{"required":["commentText"],"type":"object","properties":{"id":{"type":"integer","format":"int64"},"commentText":{"maxLength":4000,"minLength":2,"type":"string","description":"Comment Text information"},"post":{"$ref":"#/components/schemas/PostDTO"}},"description":"System User Post Comments"},"PostDTO":{"required":["content","title"],"type":"object","properties":{"id":{"type":"integer","format":"int64"},"title":{"maxLength":250,"minLength":3,"type":"string","description":"Post title information"},"content":{"type":"string","description":"Post content information"},"paidMemberOnly":{"type":"boolean","description":"Paid Membership"},"publishThirdPartyApp":{"type":"boolean","description":"Publish third party app. for example Medium."},"user":{"$ref":"#/components/schemas/UserDTO"},"blog":{"$ref":"#/components/schemas/BlogDTO"},"tags":{"uniqueItems":true,"type":"array","items":{"$ref":"#/components/schemas/TagDTO"}},"integrationId":{"type":"string"},"likeCount":{"type":"integer","format":"int32"},"viewCount":{"type":"integer","format":"int32"}},"description":"Post page information. System users only!"},"UserDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"login":{"type":"string"}}},"AdminUserDTO":{"required":["login"],"type":"object","properties":{"id":{"type":"integer","format":"int64"},"login":{"maxLength":50,"minLength":1,"pattern":"^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$","type":"string"},"firstName":{"maxLength":50,"minLength":0,"type":"string"},"lastName":{"maxLength":50,"minLength":0,"type":"string"},"email":{"maxLength":254,"minLength":5,"type":"string"},"imageUrl":{"maxLength":256,"minLength":0,"type":"string"},"activated":{"type":"boolean"},"langKey":{"maxLength":10,"minLength":2,"type":"string"},"createdBy":{"type":"string"},"createdDate":{"type":"string","format":"date-time"},"lastModifiedBy":{"type":"string"},"lastModifiedDate":{"type":"string","format":"date-time"},"authorities":{"uniqueItems":true,"type":"array","items":{"type":"string"}}}},"ManagedUserVM":{"required":["login"],"type":"object","properties":{"id":{"type":"integer","format":"int64"},"login":{"maxLength":50,"minLength":1,"pattern":"^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$","type":"string"},"firstName":{"maxLength":50,"minLength":0,"type":"string"},"lastName":{"maxLength":50,"minLength":0,"type":"string"},"email":{"maxLength":254,"minLength":5,"type":"string"},"imageUrl":{"maxLength":256,"minLength":0,"type":"string"},"activated":{"type":"boolean"},"langKey":{"maxLength":10,"minLength":2,"type":"string"},"createdBy":{"type":"string"},"createdDate":{"type":"string","format":"date-time"},"lastModifiedBy":{"type":"string"},"lastModifiedDate":{"type":"string","format":"date-time"},"authorities":{"uniqueItems":true,"type":"array","items":{"type":"string"}},"password":{"maxLength":100,"minLength":4,"type":"string"}}},"PostViewDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"post":{"$ref":"#/components/schemas/PostDTO"}},"description":"System User view for Post Analytics"},"PostLikeDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"post":{"$ref":"#/components/schemas/PostDTO"}},"description":"System User Post Likes"},"IntegrationLogDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"createdBy":{"maxLength":100,"minLength":0,"type":"string"},"createdDate":{"type":"string","format":"date-time"},"integrationName":{"type":"string","enum":["MEDIUM"]},"apiUrl":{"maxLength":1000,"minLength":0,"type":"string"},"exitCode":{"type":"string","enum":["SUCCESS","ERROR"]},"requestData":{"type":"string"},"responseData":{"type":"string"},"errorCode":{"maxLength":1000,"minLength":0,"type":"string"},"errorMessage":{"maxLength":4000,"minLength":0,"type":"string"}}},"LoginVM":{"required":["password","username"],"type":"object","properties":{"username":{"maxLength":50,"minLength":1,"type":"string"},"password":{"maxLength":100,"minLength":4,"type":"string"},"rememberMe":{"type":"boolean"}}},"JWTToken":{"type":"object","properties":{"id_token":{"type":"string"}}},"User":{"required":["activated","login"],"type":"object","properties":{"id":{"type":"integer","format":"int64"},"login":{"maxLength":50,"minLength":1,"pattern":"^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$","type":"string"},"firstName":{"maxLength":50,"minLength":0,"type":"string"},"lastName":{"maxLength":50,"minLength":0,"type":"string"},"email":{"maxLength":254,"minLength":5,"type":"string"},"activated":{"type":"boolean"},"langKey":{"maxLength":10,"minLength":2,"type":"string"},"imageUrl":{"maxLength":256,"minLength":0,"type":"string"},"resetDate":{"type":"string","format":"date-time"},"loginStatus":{"type":"string","enum":["LOGOUT","LOGIN"]}}},"KeyAndPasswordVM":{"type":"object","properties":{"key":{"type":"string"},"newPassword":{"type":"string"}}},"PasswordChangeDTO":{"type":"object","properties":{"currentPassword":{"type":"string"},"newPassword":{"type":"string"}}}}}}
+openapi: 3.0.1
+info:
+    title: Blog API
+    description: Blog API documentation
+    termsOfService: ''
+    contact:
+        name: 'cevheri'
+        url: 'https://github.com/cevheri/java-blog-web-app'
+        email: 'cevheribozoglan@gmail.com'
+    license:
+        name: unlicensed
+        url: ''
+    version: 0.0.1
+servers:
+    - url: https://cevheri-blog.herokuapp.com
+      description: LiveDemo
+paths:
+    /api/third-party-apps/{id}:
+        get:
+            tags:
+                - third-party-app-resource
+            operationId: getThirdPartyApp
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/ThirdPartyAppDTO'
+        put:
+            tags:
+                - third-party-app-resource
+            operationId: updateThirdPartyApp
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ThirdPartyAppDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/ThirdPartyAppDTO'
+        delete:
+            tags:
+                - third-party-app-resource
+            operationId: deleteThirdPartyApp
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+    /api/posts/{id}:
+        get:
+            tags:
+                - post-resource
+            operationId: getPost
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: object
+        put:
+            tags:
+                - post-resource
+            operationId: updatePost
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdatePostDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: object
+        delete:
+            tags:
+                - post-resource
+            operationId: deletePost
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: object
+        patch:
+            tags:
+                - post-resource
+            operationId: partialUpdatePost
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PostDTO'
+                    application/merge-patch+json:
+                        schema:
+                            $ref: '#/components/schemas/PostDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/PostDTO'
+    /api/post-comments/{id}:
+        get:
+            tags:
+                - post-comment-resource
+            operationId: getPostComment
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/PostCommentDTO'
+        put:
+            tags:
+                - post-comment-resource
+            operationId: updatePostComment
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PostCommentDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/PostCommentDTO'
+        delete:
+            tags:
+                - post-comment-resource
+            operationId: deletePostComment
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+    /api/blogs/{id}:
+        get:
+            tags:
+                - blog-resource
+            operationId: getBlog
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: object
+        put:
+            tags:
+                - blog-resource
+            operationId: updateBlog
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BlogDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: object
+        delete:
+            tags:
+                - blog-resource
+            operationId: deleteBlog
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: object
+        patch:
+            tags:
+                - blog-resource
+            operationId: partialUpdateBlog
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BlogDTO'
+                    application/merge-patch+json:
+                        schema:
+                            $ref: '#/components/schemas/BlogDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/BlogDTO'
+    /api/admin/users:
+        get:
+            tags:
+                - user-resource
+            operationId: getAllUsers
+            parameters:
+                - name: page
+                  in: query
+                  description: Zero-based page index (0..N)
+                  required: false
+                  schema:
+                      minimum: 0
+                      type: integer
+                      default: 0
+                - name: size
+                  in: query
+                  description: The size of the page to be returned
+                  required: false
+                  schema:
+                      minimum: 1
+                      type: integer
+                      default: 20
+                - name: sort
+                  in: query
+                  description: 'Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.'
+                  required: false
+                  schema:
+                      type: array
+                      items:
+                          type: string
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/AdminUserDTO'
+        put:
+            tags:
+                - user-resource
+            operationId: updateUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AdminUserDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/AdminUserDTO'
+        post:
+            tags:
+                - user-resource
+            operationId: createUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AdminUserDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/User'
+    /api/third-party-apps:
+        get:
+            tags:
+                - third-party-app-resource
+            operationId: getAllThirdPartyApps
+            parameters:
+                - name: page
+                  in: query
+                  description: Zero-based page index (0..N)
+                  required: false
+                  schema:
+                      minimum: 0
+                      type: integer
+                      default: 0
+                - name: size
+                  in: query
+                  description: The size of the page to be returned
+                  required: false
+                  schema:
+                      minimum: 1
+                      type: integer
+                      default: 20
+                - name: sort
+                  in: query
+                  description: 'Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.'
+                  required: false
+                  schema:
+                      type: array
+                      items:
+                          type: string
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ThirdPartyAppDTO'
+        post:
+            tags:
+                - third-party-app-resource
+            operationId: createThirdPartyApp
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ThirdPartyAppDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/ThirdPartyAppDTO'
+    /api/tags:
+        get:
+            tags:
+                - tag-resource
+            operationId: getAllTags
+            parameters:
+                - name: page
+                  in: query
+                  description: Zero-based page index (0..N)
+                  required: false
+                  schema:
+                      minimum: 0
+                      type: integer
+                      default: 0
+                - name: size
+                  in: query
+                  description: The size of the page to be returned
+                  required: false
+                  schema:
+                      minimum: 1
+                      type: integer
+                      default: 20
+                - name: sort
+                  in: query
+                  description: 'Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.'
+                  required: false
+                  schema:
+                      type: array
+                      items:
+                          type: string
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/TagDTO'
+        post:
+            tags:
+                - tag-resource
+            operationId: createTag
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/TagDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/TagDTO'
+    /api/register:
+        post:
+            tags:
+                - account-resource
+            operationId: registerAccount
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ManagedUserVM'
+                required: true
+            responses:
+                '201':
+                    description: Created
+    /api/posts:
+        get:
+            tags:
+                - post-resource
+            operationId: getAllPosts
+            parameters:
+                - name: page
+                  in: query
+                  description: Zero-based page index (0..N)
+                  required: false
+                  schema:
+                      minimum: 0
+                      type: integer
+                      default: 0
+                - name: size
+                  in: query
+                  description: The size of the page to be returned
+                  required: false
+                  schema:
+                      minimum: 1
+                      type: integer
+                      default: 20
+                - name: sort
+                  in: query
+                  description: 'Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.'
+                  required: false
+                  schema:
+                      type: array
+                      items:
+                          type: string
+                - name: eagerload
+                  in: query
+                  required: false
+                  schema:
+                      type: boolean
+                      default: false
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/PostDTO'
+        post:
+            tags:
+                - post-resource
+            operationId: createPost
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PostDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: object
+    /api/post-views:
+        get:
+            tags:
+                - post-view-resource
+            operationId: getAllPostViews
+            parameters:
+                - name: page
+                  in: query
+                  description: Zero-based page index (0..N)
+                  required: false
+                  schema:
+                      minimum: 0
+                      type: integer
+                      default: 0
+                - name: size
+                  in: query
+                  description: The size of the page to be returned
+                  required: false
+                  schema:
+                      minimum: 1
+                      type: integer
+                      default: 20
+                - name: sort
+                  in: query
+                  description: 'Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.'
+                  required: false
+                  schema:
+                      type: array
+                      items:
+                          type: string
+                - name: eagerload
+                  in: query
+                  required: false
+                  schema:
+                      type: boolean
+                      default: false
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/PostViewDTO'
+        post:
+            tags:
+                - post-view-resource
+            operationId: createPostView
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PostViewDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/PostViewDTO'
+    /api/post-likes:
+        get:
+            tags:
+                - post-like-resource
+            operationId: getAllPostLikes
+            parameters:
+                - name: page
+                  in: query
+                  description: Zero-based page index (0..N)
+                  required: false
+                  schema:
+                      minimum: 0
+                      type: integer
+                      default: 0
+                - name: size
+                  in: query
+                  description: The size of the page to be returned
+                  required: false
+                  schema:
+                      minimum: 1
+                      type: integer
+                      default: 20
+                - name: sort
+                  in: query
+                  description: 'Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.'
+                  required: false
+                  schema:
+                      type: array
+                      items:
+                          type: string
+                - name: eagerload
+                  in: query
+                  required: false
+                  schema:
+                      type: boolean
+                      default: false
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/PostLikeDTO'
+        post:
+            tags:
+                - post-like-resource
+            operationId: createPostLike
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PostLikeDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/PostLikeDTO'
+    /api/post-comments:
+        post:
+            tags:
+                - post-comment-resource
+            operationId: createPostComment
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PostCommentDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/PostCommentDTO'
+    /api/logout:
+        post:
+            tags:
+                - user-jwt-controller
+            operationId: logout
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: string
+    /api/integration-logs:
+        get:
+            tags:
+                - integration-log-resource
+            operationId: getAllIntegrationLogs
+            parameters:
+                - name: page
+                  in: query
+                  description: Zero-based page index (0..N)
+                  required: false
+                  schema:
+                      minimum: 0
+                      type: integer
+                      default: 0
+                - name: size
+                  in: query
+                  description: The size of the page to be returned
+                  required: false
+                  schema:
+                      minimum: 1
+                      type: integer
+                      default: 20
+                - name: sort
+                  in: query
+                  description: 'Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.'
+                  required: false
+                  schema:
+                      type: array
+                      items:
+                          type: string
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/IntegrationLogDTO'
+        post:
+            tags:
+                - integration-log-resource
+            operationId: createIntegrationLog
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/IntegrationLogDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/IntegrationLogDTO'
+    /api/blogs:
+        get:
+            tags:
+                - blog-resource
+            operationId: getAllBlogs
+            parameters:
+                - name: page
+                  in: query
+                  description: Zero-based page index (0..N)
+                  required: false
+                  schema:
+                      minimum: 0
+                      type: integer
+                      default: 0
+                - name: size
+                  in: query
+                  description: The size of the page to be returned
+                  required: false
+                  schema:
+                      minimum: 1
+                      type: integer
+                      default: 20
+                - name: sort
+                  in: query
+                  description: 'Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.'
+                  required: false
+                  schema:
+                      type: array
+                      items:
+                          type: string
+                - name: eagerload
+                  in: query
+                  required: false
+                  schema:
+                      type: boolean
+                      default: false
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/BlogDTO'
+        post:
+            tags:
+                - blog-resource
+            operationId: createBlog
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BlogDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: object
+    /api/authenticate:
+        get:
+            tags:
+                - account-resource
+            operationId: isAuthenticated
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: string
+        post:
+            tags:
+                - user-jwt-controller
+            operationId: authorize
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LoginVM'
+                required: true
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/JWTToken'
+    /api/account:
+        get:
+            tags:
+                - account-resource
+            operationId: getAccount
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/AdminUserDTO'
+        post:
+            tags:
+                - account-resource
+            operationId: saveAccount
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AdminUserDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+    /api/account/reset-password/init:
+        post:
+            tags:
+                - account-resource
+            operationId: requestPasswordReset
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: string
+                required: true
+            responses:
+                '200':
+                    description: OK
+    /api/account/reset-password/finish:
+        post:
+            tags:
+                - account-resource
+            operationId: finishPasswordReset
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/KeyAndPasswordVM'
+                required: true
+            responses:
+                '200':
+                    description: OK
+    /api/account/change-password:
+        post:
+            tags:
+                - account-resource
+            operationId: changePassword
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PasswordChangeDTO'
+                required: true
+            responses:
+                '200':
+                    description: OK
+    /api/users:
+        get:
+            tags:
+                - public-user-resource
+            operationId: getAllPublicUsers
+            parameters:
+                - name: page
+                  in: query
+                  description: Zero-based page index (0..N)
+                  required: false
+                  schema:
+                      minimum: 0
+                      type: integer
+                      default: 0
+                - name: size
+                  in: query
+                  description: The size of the page to be returned
+                  required: false
+                  schema:
+                      minimum: 1
+                      type: integer
+                      default: 20
+                - name: sort
+                  in: query
+                  description: 'Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.'
+                  required: false
+                  schema:
+                      type: array
+                      items:
+                          type: string
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/UserDTO'
+    /api/tags/{id}:
+        get:
+            tags:
+                - tag-resource
+            operationId: getTag
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/TagDTO'
+        delete:
+            tags:
+                - tag-resource
+            operationId: deleteTag
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+    /api/posts/{id}/view-count:
+        get:
+            tags:
+                - post-resource
+            operationId: getPostViewCount
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: integer
+                                format: int32
+    /api/posts/{id}/like-count:
+        get:
+            tags:
+                - post-resource
+            operationId: getPostLikeCount
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: integer
+                                format: int32
+    /api/posts/{id}/comment-count:
+        get:
+            tags:
+                - post-resource
+            operationId: getPostCommentCount
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: integer
+                                format: int32
+    /api/post-views/{id}:
+        get:
+            tags:
+                - post-view-resource
+            operationId: getPostView
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/PostViewDTO'
+        delete:
+            tags:
+                - post-view-resource
+            operationId: deletePostView
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+    /api/post-likes/{id}:
+        get:
+            tags:
+                - post-like-resource
+            operationId: getPostLike
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/PostLikeDTO'
+        delete:
+            tags:
+                - post-like-resource
+            operationId: deletePostLike
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+    /api/post-comments/post/{postId}:
+        get:
+            tags:
+                - post-comment-resource
+            operationId: getAllPostCommentsByPostId
+            parameters:
+                - name: postId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+                - name: page
+                  in: query
+                  description: Zero-based page index (0..N)
+                  required: false
+                  schema:
+                      minimum: 0
+                      type: integer
+                      default: 0
+                - name: size
+                  in: query
+                  description: The size of the page to be returned
+                  required: false
+                  schema:
+                      minimum: 1
+                      type: integer
+                      default: 20
+                - name: sort
+                  in: query
+                  description: 'Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.'
+                  required: false
+                  schema:
+                      type: array
+                      items:
+                          type: string
+                - name: eagerload
+                  in: query
+                  required: false
+                  schema:
+                      type: boolean
+                      default: false
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/PostCommentDTO'
+    /api/integration-logs/{id}:
+        get:
+            tags:
+                - integration-log-resource
+            operationId: getIntegrationLog
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/IntegrationLogDTO'
+    /api/authorities:
+        get:
+            tags:
+                - public-user-resource
+            operationId: getAuthorities
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                type: array
+                                items:
+                                    type: string
+    /api/admin/users/{login}:
+        get:
+            tags:
+                - user-resource
+            operationId: getUser
+            parameters:
+                - name: login
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        '*/*':
+                            schema:
+                                $ref: '#/components/schemas/AdminUserDTO'
+        delete:
+            tags:
+                - user-resource
+            operationId: deleteUser
+            parameters:
+                - name: login
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: OK
+    /api/activate:
+        get:
+            tags:
+                - account-resource
+            operationId: activateAccount
+            parameters:
+                - name: key
+                  in: query
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: OK
+components:
+    schemas:
+        ThirdPartyAppDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                name:
+                    type: string
+                    description: 'App Name : MEDIUM etc.'
+                    enum:
+                        - MEDIUM
+                baseUrl:
+                    maxLength: 1000
+                    minLength: 0
+                    type: string
+                    description: 'app base url : https:'
+                accessKey:
+                    maxLength: 1000
+                    minLength: 0
+                    type: string
+                    description: app access key :2418f8eabee116684110f01ec98631f35f7528a88c33312e9a339fb1e9de46ec9
+                authorId:
+                    maxLength: 1000
+                    minLength: 0
+                    type: string
+                    description: app access key :2418f8eabee116684110f01ec98631f35f7528a88c33312e9a339fb1e9de46ec9
+                creatingPostApi:
+                    maxLength: 1000
+                    minLength: 0
+                    type: string
+                    description: create post api endpoint - POST /users/{{authorId}}/posts
+                readPostApi:
+                    maxLength: 1000
+                    minLength: 0
+                    type: string
+                    description: Listing the user’s publications api endpoint - GET  /users/{{userId}}/publications
+                active:
+                    type: boolean
+                    description: Integration active or passive information
+            description: Third party integration configuration. BaseURL, accessKey etc.
+        TagDTO:
+            required:
+                - name
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                name:
+                    maxLength: 50
+                    minLength: 2
+                    type: string
+                    description: Tag information
+            description: Tag information, System users only! Tag Bilgisi (opsiyonel ve birden fazla) bulunması gerekmektedir.
+        UpdatePostDTO:
+            required:
+                - content
+                - title
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                title:
+                    maxLength: 250
+                    minLength: 3
+                    type: string
+                    description: Post title information
+                content:
+                    type: string
+                    description: Post content information
+                paidMemberOnly:
+                    type: boolean
+                    description: Paid Membership
+                publishThirdPartyApp:
+                    type: boolean
+                    description: Publish third party app. for example Medium.
+                tags:
+                    uniqueItems: true
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/TagDTO'
+            description: Post page information. System users only!
+        BlogDTO:
+            required:
+                - name
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                name:
+                    maxLength: 250
+                    minLength: 3
+                    type: string
+                    description: Blog name information
+                user:
+                    $ref: '#/components/schemas/UserDTO'
+            description: Blog page for users post. System users only!
+        PostCommentDTO:
+            required:
+                - commentText
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                commentText:
+                    maxLength: 4000
+                    minLength: 2
+                    type: string
+                    description: Comment Text information
+                post:
+                    $ref: '#/components/schemas/PostDTO'
+            description: System User Post Comments
+        PostDTO:
+            required:
+                - content
+                - title
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                title:
+                    maxLength: 250
+                    minLength: 3
+                    type: string
+                    description: Post title information
+                content:
+                    type: string
+                    description: Post content information
+                paidMemberOnly:
+                    type: boolean
+                    description: Paid Membership
+                publishThirdPartyApp:
+                    type: boolean
+                    description: Publish third party app. for example Medium.
+                user:
+                    $ref: '#/components/schemas/UserDTO'
+                blog:
+                    $ref: '#/components/schemas/BlogDTO'
+                tags:
+                    uniqueItems: true
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/TagDTO'
+                integrationId:
+                    type: string
+                likeCount:
+                    type: integer
+                    format: int32
+                viewCount:
+                    type: integer
+                    format: int32
+            description: Post page information. System users only!
+        UserDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                login:
+                    type: string
+        AdminUserDTO:
+            required:
+                - login
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                login:
+                    maxLength: 50
+                    minLength: 1
+                    type: string
+                firstName:
+                    maxLength: 50
+                    minLength: 0
+                    type: string
+                lastName:
+                    maxLength: 50
+                    minLength: 0
+                    type: string
+                email:
+                    maxLength: 254
+                    minLength: 5
+                    type: string
+                imageUrl:
+                    maxLength: 256
+                    minLength: 0
+                    type: string
+                activated:
+                    type: boolean
+                langKey:
+                    maxLength: 10
+                    minLength: 2
+                    type: string
+                createdBy:
+                    type: string
+                createdDate:
+                    type: string
+                    format: date-time
+                lastModifiedBy:
+                    type: string
+                lastModifiedDate:
+                    type: string
+                    format: date-time
+                authorities:
+                    uniqueItems: true
+                    type: array
+                    items:
+                        type: string
+        ManagedUserVM:
+            required:
+                - login
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                login:
+                    maxLength: 50
+                    minLength: 1
+                    type: string
+                firstName:
+                    maxLength: 50
+                    minLength: 0
+                    type: string
+                lastName:
+                    maxLength: 50
+                    minLength: 0
+                    type: string
+                email:
+                    maxLength: 254
+                    minLength: 5
+                    type: string
+                imageUrl:
+                    maxLength: 256
+                    minLength: 0
+                    type: string
+                activated:
+                    type: boolean
+                langKey:
+                    maxLength: 10
+                    minLength: 2
+                    type: string
+                createdBy:
+                    type: string
+                createdDate:
+                    type: string
+                    format: date-time
+                lastModifiedBy:
+                    type: string
+                lastModifiedDate:
+                    type: string
+                    format: date-time
+                authorities:
+                    uniqueItems: true
+                    type: array
+                    items:
+                        type: string
+                password:
+                    maxLength: 100
+                    minLength: 4
+                    type: string
+        PostViewDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                post:
+                    $ref: '#/components/schemas/PostDTO'
+            description: System User view for Post Analytics
+        PostLikeDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                post:
+                    $ref: '#/components/schemas/PostDTO'
+            description: System User Post Likes
+        IntegrationLogDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                createdBy:
+                    maxLength: 100
+                    minLength: 0
+                    type: string
+                createdDate:
+                    type: string
+                    format: date-time
+                integrationName:
+                    type: string
+                    enum:
+                        - MEDIUM
+                apiUrl:
+                    maxLength: 1000
+                    minLength: 0
+                    type: string
+                exitCode:
+                    type: string
+                    enum:
+                        - SUCCESS
+                        - ERROR
+                requestData:
+                    type: string
+                responseData:
+                    type: string
+                errorCode:
+                    maxLength: 1000
+                    minLength: 0
+                    type: string
+                errorMessage:
+                    maxLength: 4000
+                    minLength: 0
+                    type: string
+        LoginVM:
+            required:
+                - password
+                - username
+            type: object
+            properties:
+                username:
+                    maxLength: 50
+                    minLength: 1
+                    type: string
+                password:
+                    maxLength: 100
+                    minLength: 4
+                    type: string
+                rememberMe:
+                    type: boolean
+        JWTToken:
+            type: object
+            properties:
+                id_token:
+                    type: string
+        User:
+            required:
+                - activated
+                - login
+            type: object
+            properties:
+                id:
+                    type: integer
+                    format: int64
+                login:
+                    maxLength: 50
+                    minLength: 1
+                    type: string
+                firstName:
+                    maxLength: 50
+                    minLength: 0
+                    type: string
+                lastName:
+                    maxLength: 50
+                    minLength: 0
+                    type: string
+                email:
+                    maxLength: 254
+                    minLength: 5
+                    type: string
+                activated:
+                    type: boolean
+                langKey:
+                    maxLength: 10
+                    minLength: 2
+                    type: string
+                imageUrl:
+                    maxLength: 256
+                    minLength: 0
+                    type: string
+                resetDate:
+                    type: string
+                    format: date-time
+                loginStatus:
+                    type: string
+                    enum:
+                        - LOGOUT
+                        - LOGIN
+        KeyAndPasswordVM:
+            type: object
+            properties:
+                key:
+                    type: string
+                newPassword:
+                    type: string
+        PasswordChangeDTO:
+            type: object
+            properties:
+                currentPassword:
+                    type: string
+                newPassword:
+                    type: string
