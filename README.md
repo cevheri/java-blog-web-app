@@ -101,7 +101,7 @@ Then run:
 docker-compose -f src/main/docker/app.yml up -d
 ```
 
-
+---
 ## Continuous Integration
 - GitHub Action Configuration File :
 
@@ -109,4 +109,12 @@ docker-compose -f src/main/docker/app.yml up -d
 
 - Auto deploy heroku cloud platform.
 
+---
+## EntityModel
+![](entity-model.png)
+
+---
+
+## Database Diagram
+![](database-diagram.png)
 
