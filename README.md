@@ -101,6 +101,13 @@ Then run:
 docker-compose -f src/main/docker/app.yml up -d
 ```
 
+
+#### Docker Hub integration
+```
+docker run -p 8080:8080 cevheri/java-blog-web-app:latest
+```
+
+
 ---
 ## Continuous Integration
 - GitHub Action Configuration File :
